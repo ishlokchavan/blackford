@@ -54,7 +54,7 @@ export function Footer({ t }: FooterProps) {
               ))}
               <li>
                 <a
-                  href="/careers"
+                  href="javascript:void(0);"
                   className="ink text-[0.72rem] font-body text-white/35 hover:text-white/65 transition-colors duration-300"
                 >
                   {t.footer.links.careers}
@@ -68,8 +68,8 @@ export function Footer({ t }: FooterProps) {
             <p className="smallcaps text-gold/60 mb-5">Connect</p>
             <ul className="space-y-3.5">
               {[
-                { label: t.footer.social.instagram, href: "https://instagram.com" },
-                { label: t.footer.social.linkedin, href: "https://linkedin.com" },
+                { label: t.footer.social.instagram, href: "javascript:void(0);" },
+                { label: t.footer.social.linkedin, href: "javascript:void(0);" },
               ].map(({ label, href }) => (
                 <li key={label}>
                   <a
