@@ -28,8 +28,8 @@ export function Footer({ t }: FooterProps) {
 
           {/* Brand */}
           <div className="col-span-12 md:col-span-4">
-            <p className="display text-white text-2xl mb-2">Blackford</p>
-            <p className="text-gold/50 mb-6">Private Acquisitions</p>
+            <p className="display italic text-white text-3xl mb-1">Blackford</p>
+            <p className="text-[0.72rem] italic text-gold-light/70 mb-6">Est. MMXXIV · London</p>
             <p className="text-[0.72rem] font-body text-white/30 leading-relaxed max-w-[200px]">
               {t.footer.tagline}
             </p>
@@ -37,7 +37,7 @@ export function Footer({ t }: FooterProps) {
 
           {/* Navigation */}
           <nav className="col-span-6 md:col-span-2 md:col-start-6" aria-label="Footer navigation">
-            <p className="text-gold/40 mb-5">Navigation</p>
+            <p className="smallcaps text-gold/60 mb-5">Navigation</p>
             <ul className="space-y-3.5">
               {[
                 { label: t.footer.links.about, id: "categories" },
@@ -65,7 +65,7 @@ export function Footer({ t }: FooterProps) {
 
           {/* Social */}
           <div className="col-span-6 md:col-span-2">
-            <p className="text-gold/40 mb-5">Connect</p>
+            <p className="smallcaps text-gold/60 mb-5">Connect</p>
             <ul className="space-y-3.5">
               {[
                 { label: t.footer.social.instagram, href: "https://instagram.com" },

@@ -89,7 +89,7 @@ export function Hero({ t }: HeroProps) {
           initial={{ opacity: 0, x: -10 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.9, delay: 0.5 }}
-          className="text-gold-light mb-10 md:mb-14"
+          className="smallcaps text-gold-light mb-10 md:mb-14"
         >
           {t.hero.eyebrow}
         </motion.p>
@@ -123,7 +123,7 @@ export function Hero({ t }: HeroProps) {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 1.1 }}
-            className="text-white/55 text-[0.78rem] leading-[1.8] max-w-xs font-body font-light"
+            className="text-white/65 text-[0.95rem] leading-[1.75] max-w-sm italic"
           >
             {t.hero.subheadline}
           </motion.p>
@@ -157,7 +157,7 @@ export function Hero({ t }: HeroProps) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.6, duration: 0.7 }}
-          className="mt-4 text-white/22"
+          className="mt-4 smallcaps text-white/30"
         >
           {t.hero.footnote}
         </motion.p>

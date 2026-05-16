@@ -60,7 +60,7 @@ export function Navbar({ locale, onLocaleChange, t }: NavbarProps) {
           >
             <span
               className={[
-                "display text-xl md:text-2xl transition-colors duration-500",
+                "display italic text-2xl md:text-3xl transition-colors duration-500",
                 scrolled ? "text-black" : "text-ivory",
               ].join(" ")}
             >
@@ -68,19 +68,11 @@ export function Navbar({ locale, onLocaleChange, t }: NavbarProps) {
             </span>
             <span
               className={[
-                "transition-colors duration-500 opacity-50",
-                scrolled ? "text-stone" : "text-ivory",
-              ].join(" ")}
-            >
-              /
-            </span>
-            <span
-              className={[
-                "transition-colors duration-500",
+                "hidden sm:inline text-[0.72rem] italic transition-colors duration-500",
                 scrolled ? "text-gold" : "text-gold-light",
               ].join(" ")}
             >
-              Private Acquisitions
+              Est. MMXXIV
             </span>
           </button>
 

@@ -23,7 +23,7 @@ const schema = z.object({
 type FormValues = z.infer<typeof schema>;
 
 /* ─── consistent dark-on-black values ─── */
-const LABEL = "text-white/40";
+const LABEL = "smallcaps text-white/45";
 const INPUT = "w-full bg-transparent text-white text-[0.83rem] font-body font-light focus:outline-none placeholder-white/20";
 const DIVIDER = "border-t border-white/10";
 
@@ -65,7 +65,7 @@ export function Contact({ t }: ContactProps) {
               initial={{ opacity: 0 }}
               animate={isInView ? { opacity: 1 } : {}}
               transition={{ duration: 0.6 }}
-              className="text-gold-light/70 mb-8"
+              className="smallcaps text-gold-light/80 mb-8"
             >
               {t.contact.eyebrow}
             </motion.p>
@@ -86,7 +86,7 @@ export function Contact({ t }: ContactProps) {
               initial={{ opacity: 0 }}
               animate={isInView ? { opacity: 1 } : {}}
               transition={{ duration: 0.7, delay: 0.3 }}
-              className="text-white/45 text-[0.78rem] leading-[1.8] font-body font-light max-w-[280px]"
+              className="text-white/65 text-[0.95rem] leading-[1.7] italic max-w-[300px]"
             >
               {t.contact.body}
             </motion.p>

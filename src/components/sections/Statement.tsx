@@ -38,9 +38,9 @@ export function Statement() {
               initial={{ opacity: 0 }}
               animate={isInView ? { opacity: 1 } : {}}
               transition={{ duration: 0.5 }}
-              className="text-gold-light/80 mb-8 md:mb-10"
+              className="smallcaps text-gold-light/80 mb-8 md:mb-10"
             >
-              Established 2024
+              Established · MMXXIV
             </motion.p>
 
             <blockquote>
@@ -70,7 +70,7 @@ export function Statement() {
               ].map(({ value, label }) => (
                 <div key={label} className="flex flex-col gap-2">
                   <span className="display text-white text-3xl md:text-3xl leading-none">{value}</span>
-                  <span className="text-white/55 leading-snug">{label}</span>
+                  <span className="smallcaps text-white/55 leading-snug">{label}</span>
                 </div>
               ))}
             </motion.div>

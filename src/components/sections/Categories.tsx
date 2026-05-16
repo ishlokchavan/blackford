@@ -47,7 +47,7 @@ export function Categories({ t }: CategoriesProps) {
               initial={{ opacity: 0 }}
               animate={isInView ? { opacity: 1 } : {}}
               transition={{ duration: 0.6 }}
-              className="text-gold mb-8"
+              className="smallcaps text-gold mb-8"
             >
               {t.categories.eyebrow}
             </motion.p>
@@ -69,7 +69,7 @@ export function Categories({ t }: CategoriesProps) {
             transition={{ duration: 0.7, delay: 0.3 }}
             className="col-span-12 md:col-span-5 md:col-start-8 flex items-end pb-1"
           >
-            <p className="text-stone text-[0.78rem] leading-[1.8] font-body font-light">
+            <p className="text-stone text-[1rem] leading-[1.75] italic">
               {t.categories.body}
             </p>
           </motion.div>
@@ -253,7 +253,7 @@ function CategoryCarousel({
                   aria-hidden
                 />
                 <div className="absolute bottom-5 left-6 right-6 z-10">
-                  <p className="text-white/40 mb-1.5">0{i + 1}</p>
+                  <p className="smallcaps text-white/60 mb-1.5 italic">№ {String(i + 1).padStart(2, "0")}</p>
                   <h3 className="display text-white text-[8vw] sm:text-[6vw] leading-none">{item.title}</h3>
                 </div>
               </div>
@@ -337,8 +337,8 @@ function CategoryRow({
       >
         {/* Index */}
         <div className="col-span-1">
-          <span className={["transition-colors duration-500", active ? "text-gold/60" : "text-border"].join(" ")}>
-            0{index + 1}
+          <span className={["smallcaps italic transition-colors duration-500", active ? "text-gold-light" : "text-border"].join(" ")}>
+            № {String(index + 1).padStart(2, "0")}
           </span>
         </div>
 

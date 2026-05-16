@@ -1,24 +1,24 @@
 @import "tailwindcss";
 
 @theme inline {
-  /* Palette */
-  --color-black: #080807;
-  --color-ivory: #F5F0E8;
-  --color-ivory-mid: #EDE6D9;
-  --color-ivory-deep: #E3D9C8;
-  --color-charcoal: #161614;
-  --color-charcoal-2: #222220;
-  --color-stone: #3A3935;
-  --color-stone-light: #5C5B57;
-  --color-gold: #8C7650;
-  --color-gold-light: #B89D72;
-  --color-gold-pale: #E5D9C3;
-  --color-border: #CCCAC4;
-  --color-border-dark: #2E2D2A;
+  /* Heritage palette — aged paper, deep sepia, antique gold */
+  --color-black: #1A1411;
+  --color-ivory: #ECE0C8;
+  --color-ivory-mid: #DFD1B3;
+  --color-ivory-deep: #CFBE9A;
+  --color-charcoal: #2C2218;
+  --color-charcoal-2: #3A2E22;
+  --color-stone: #4A3D2A;
+  --color-stone-light: #6E5E45;
+  --color-gold: #8C6E3F;
+  --color-gold-light: #A78B5A;
+  --color-gold-pale: #D9C49A;
+  --color-border: #B8A88A;
+  --color-border-dark: #3A2E22;
 
   /* Typography */
   --font-display: var(--font-playfair);
-  --font-body: var(--font-inter);
+  --font-body: var(--font-eb-garamond);
 }
 
 /* ---------- Reset & base ---------- */
@@ -29,61 +29,105 @@ html {
 }
 
 body {
-  background: #F5F0E8;
-  color: #161614;
-  font-family: var(--font-inter), 'Helvetica Neue', Helvetica, sans-serif;
-  font-size: 0.875rem;
-  line-height: 1.65;
+  background: #ECE0C8;
+  color: #2C2218;
+  font-family: var(--font-eb-garamond), 'Iowan Old Style', Georgia, serif;
+  font-size: 1rem;
+  line-height: 1.7;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
 }
 
+/* Paper grain across the whole document (very subtle) */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.08;
+  mix-blend-mode: multiply;
+  background-image:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240' viewBox='0 0 240 240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 0.27 0 0 0 0 0.21 0 0 0 0 0.13 0 0 0 0.9 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+/* Vignette on dark sections */
+.bg-black {
+  background-color: #1A1411;
+}
+
 ::selection {
-  background: #E5D9C3;
-  color: #080807;
+  background: #D9C49A;
+  color: #1A1411;
 }
 
 ::-webkit-scrollbar { width: 3px; }
-::-webkit-scrollbar-track { background: #F5F0E8; }
-::-webkit-scrollbar-thumb { background: #B89D72; }
+::-webkit-scrollbar-track { background: #ECE0C8; }
+::-webkit-scrollbar-thumb { background: #8C6E3F; }
 
 :focus-visible {
-  outline: 1px solid #8C7650;
+  outline: 1px solid #8C6E3F;
   outline-offset: 3px;
 }
 
 /* ---------- Display type ---------- */
 
 .display {
-  font-family: var(--font-playfair), Georgia, serif;
+  font-family: var(--font-playfair), 'Iowan Old Style', Georgia, serif;
   font-weight: 400;
   line-height: 1;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
 }
 
 .display-italic {
-  font-family: var(--font-playfair), Georgia, serif;
+  font-family: var(--font-playfair), 'Iowan Old Style', Georgia, serif;
   font-weight: 400;
   font-style: italic;
   line-height: 1;
-  letter-spacing: -0.015em;
+  letter-spacing: -0.005em;
+}
+
+/* Small caps label — the period-style eyebrow */
+.smallcaps {
+  font-family: var(--font-playfair), Georgia, serif;
+  font-variant: small-caps;
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  line-height: 1.2;
 }
 
 /* ---------- Utilities ---------- */
 
-/* Gold horizontal rule */
 .rule {
   height: 1px;
-  background: #CCCAC4;
+  background: #B8A88A;
 }
 
 .rule-gold {
   height: 1px;
-  background: linear-gradient(90deg, transparent 0%, #B89D72 30%, #B89D72 70%, transparent 100%);
-  opacity: 0.5;
+  background: linear-gradient(90deg, transparent 0%, #A78B5A 30%, #A78B5A 70%, transparent 100%);
+  opacity: 0.6;
 }
 
+/* Decorative period divider — line · ornament · line */
+.ornament {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  color: #8C6E3F;
+  font-family: var(--font-playfair), serif;
+  font-style: italic;
+  font-size: 0.9rem;
+}
+.ornament::before,
+.ornament::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #B8A88A 50%, transparent);
+}
 
 /* Hover underline line */
 .ink {

@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Playfair_Display, Inter } from "next/font/google";
+import { Playfair_Display, EB_Garamond } from "next/font/google";
 import "./globals.css";
 
 const playfair = Playfair_Display({
@@ -10,10 +10,11 @@ const playfair = Playfair_Display({
   display: "swap",
 });
 
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin", "latin-ext", "cyrillic"],
-  weight: ["300", "400", "500"],
+const ebGaramond = EB_Garamond({
+  variable: "--font-eb-garamond",
+  subsets: ["latin", "latin-ext"],
+  weight: ["400", "500", "600"],
+  style: ["normal", "italic"],
   display: "swap",
 });
 
@@ -110,7 +111,7 @@ export default function RootLayout({
     <html
       lang="en"
       dir="ltr"
-      className={`${playfair.variable} ${inter.variable} h-full`}
+      className={`${playfair.variable} ${ebGaramond.variable} h-full`}
     >
       <head>
         <script
