@@ -14,7 +14,7 @@ export function Statement() {
       {/* Background image */}
       <div className="absolute inset-0" aria-hidden>
         <Image
-          src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1920&q=75"
+          src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1920&q=75"
           alt=""
           fill
           className="object-cover opacity-20"
@@ -60,10 +60,10 @@ export function Statement() {
               className="flex flex-wrap gap-x-12 gap-y-6 border-t border-white/10 pt-10"
             >
               {[
-                { value: "12", label: "Primary markets" },
-                { value: "4", label: "Asset categories" },
-                { value: "100%", label: "Private transactions" },
-                { value: "24 h", label: "Response guarantee" },
+                { value: "18", label: "Markets served" },
+                { value: "4", label: "Asset disciplines" },
+                { value: "100%", label: "Off-market transactions" },
+                { value: "24 h", label: "Enquiry response" },
               ].map(({ value, label }) => (
                 <div key={label} className="flex flex-col gap-1.5">
                   <span className="display text-white text-2xl md:text-3xl leading-none">{value}</span>

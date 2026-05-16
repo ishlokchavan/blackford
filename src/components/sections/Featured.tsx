@@ -13,8 +13,8 @@ const items = [
       "A significant lateral apartment across the principal floor of a Regency townhouse. Five reception rooms, four bedrooms.",
     status: "Private Sale",
     image:
-      "https://images.unsplash.com/photo-1613977257363-707ba9348227?auto=format&fit=crop&w=900&q=85",
-    imageAlt: "Mayfair Regency townhouse residence",
+      "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=900&q=85",
+    imageAlt: "Mayfair Regency townhouse interior",
   },
   {
     category: "Timepieces",
@@ -24,8 +24,8 @@ const items = [
       "A highly important pink gold perpetual calendar chronograph. Fourth series. Single owner since acquisition.",
     status: "By Private Enquiry",
     image:
-      "https://images.unsplash.com/photo-1547996160-81dfa63595aa?auto=format&fit=crop&w=900&q=85",
-    imageAlt: "Patek Philippe perpetual calendar chronograph",
+      "https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?auto=format&fit=crop&w=900&q=85",
+    imageAlt: "Patek Philippe perpetual calendar chronograph detail",
   },
   {
     category: "Automobiles",
@@ -35,7 +35,7 @@ const items = [
       "One of 330 examples produced. Matching numbers throughout. Documented single-family ownership from new.",
     status: "Private Sale",
     image:
-      "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=900&q=85",
+      "https://images.unsplash.com/photo-1544636331-e26879cd4d9b?auto=format&fit=crop&w=900&q=85",
     imageAlt: "1966 Ferrari 275 GTB/4 classic motorcar",
   },
 ];
@@ -72,8 +72,8 @@ export function Featured() {
             transition={{ duration: 0.9, delay: 0.1, ease: [0.16, 1, 0.3, 1] as const }}
             className="display text-black text-[9.5vw] sm:text-[7vw] md:text-[5vw] lg:text-[4vw] max-w-2xl"
           >
-            <span className="block">Selected acquisitions,</span>
-            <span className="block display-italic">available now.</span>
+            <span className="block">Provenance-verified.</span>
+            <span className="block display-italic">Available now.</span>
           </motion.h2>
         </div>
 

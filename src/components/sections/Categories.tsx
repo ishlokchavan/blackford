@@ -15,8 +15,8 @@ const categoryImages: Record<string, { src: string; alt: string }> = {
     alt: "Luxury villa exterior with pool",
   },
   automobiles: {
-    src: "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=900&q=80",
-    alt: "Provenance motorcars",
+    src: "https://images.unsplash.com/photo-1544636331-e26879cd4d9b?auto=format&fit=crop&w=900&q=80",
+    alt: "Provenance motorcar",
   },
   "luxury-goods": {
     src: "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=900&q=80",
