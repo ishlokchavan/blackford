@@ -208,7 +208,7 @@ export function Contact({ t }: ContactProps) {
                       </>
                     )}
                   </button>
-                  <p className="text-[0.65rem] font-body text-white/18 italic leading-snug">
+                  <p className="text-[0.8rem] font-body text-white/40 italic leading-snug">
                     {f.minimumNote}
                   </p>
                 </div>
