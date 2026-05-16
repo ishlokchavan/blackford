@@ -8,158 +8,152 @@ interface HeroProps {
   t: Translations;
 }
 
-function fadeInUp(delay: number) {
-  return {
-    initial: { opacity: 0, y: 24 },
-    animate: { opacity: 1, y: 0 },
-    transition: { duration: 0.9, delay, ease: [0.25, 0.46, 0.45, 0.94] as const },
-  };
-}
-
 export function Hero({ t }: HeroProps) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end start"],
-  });
+  const ref = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
+  const yContent = useTransform(scrollYProgress, [0, 1], ["0%", "18%"]);
+  const fade = useTransform(scrollYProgress, [0, 0.65], [1, 0]);
 
-  const yText = useTransform(scrollYProgress, [0, 1], ["0%", "12%"]);
-  const opacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
-
-  const handleNavClick = (id: string) => {
-    const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: "smooth" });
-  };
-
-  const headlineLines = t.hero.headline.split("\n");
+  const scrollTo = (id: string) =>
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
 
   return (
     <section
-      ref={containerRef}
-      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-black"
+      ref={ref}
+      className="relative min-h-[100svh] bg-black overflow-hidden flex flex-col"
       aria-label="Hero"
     >
-      {/* Warm light bloom */}
+
+      {/* ── Atmospheric layer ── */}
       <div
-        className="absolute inset-0 opacity-25"
-        style={{
-          backgroundImage: `radial-gradient(ellipse 70% 55% at 50% 38%, #3A2A18 0%, transparent 70%)`,
-        }}
         aria-hidden
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(ellipse 90% 70% at 20% 60%, rgba(44,32,14,0.55) 0%, transparent 65%), " +
+            "radial-gradient(ellipse 60% 80% at 80% 20%, rgba(30,24,14,0.3) 0%, transparent 70%)",
+        }}
       />
 
-      {/* Grain */}
-      <div
-        className="absolute inset-0 opacity-[0.018]"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
-          backgroundSize: "200px 200px",
-        }}
-        aria-hidden
-      />
+      {/* Fine film grain */}
+      <svg aria-hidden className="absolute inset-0 w-full h-full opacity-[0.04] pointer-events-none">
+        <filter id="grain">
+          <feTurbulence type="fractalNoise" baseFrequency="0.72" numOctaves="4" stitchTiles="stitch" />
+          <feColorMatrix type="saturate" values="0" />
+        </filter>
+        <rect width="100%" height="100%" filter="url(#grain)" />
+      </svg>
 
-      {/* Vertical rules */}
-      <div className="absolute left-8 md:left-14 top-0 bottom-0 pointer-events-none" aria-hidden>
-        <motion.div
-          initial={{ scaleY: 0 }}
-          animate={{ scaleY: 1 }}
-          transition={{ duration: 1.4, delay: 0.3, ease: [0.25, 0.46, 0.45, 0.94] as const }}
-          style={{ transformOrigin: "top" }}
-          className="w-px h-full bg-gradient-to-b from-transparent via-gold/25 to-transparent"
-        />
-      </div>
-      <div className="absolute right-8 md:right-14 top-0 bottom-0 pointer-events-none" aria-hidden>
-        <motion.div
-          initial={{ scaleY: 0 }}
-          animate={{ scaleY: 1 }}
-          transition={{ duration: 1.4, delay: 0.5, ease: [0.25, 0.46, 0.45, 0.94] as const }}
-          style={{ transformOrigin: "top" }}
-          className="w-px h-full bg-gradient-to-b from-transparent via-gold/15 to-transparent"
-        />
-      </div>
-
-      {/* Content */}
+      {/* Left editorial rule */}
       <motion.div
-        style={{ y: yText, opacity }}
-        className="relative z-10 w-full max-w-[1400px] mx-auto px-6 md:px-16 lg:px-24 flex flex-col items-start md:items-center"
+        aria-hidden
+        initial={{ scaleY: 0 }}
+        animate={{ scaleY: 1 }}
+        transition={{ duration: 1.6, delay: 0.4, ease: [0.16, 1, 0.3, 1] as const }}
+        style={{ transformOrigin: "top" }}
+        className="absolute left-[1.75rem] md:left-[4rem] lg:left-[6rem] top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-gold/20 to-transparent"
+      />
+
+      {/* ── Content ── */}
+      <motion.div
+        style={{ y: yContent, opacity: fade }}
+        className="relative z-10 flex flex-col flex-1 gutter inner pt-[30vh] md:pt-[26vh] pb-16 md:pb-20"
       >
         {/* Eyebrow */}
-        <motion.div
-          {...fadeInUp(0.2)}
-          className="flex items-center gap-4 mb-10 md:mb-14"
+        <motion.p
+          initial={{ opacity: 0, x: -10 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, delay: 0.5 }}
+          className="overline text-gold mb-10 md:mb-14 flex items-center gap-3"
         >
-          <div className="h-px w-8 bg-gold/50" aria-hidden />
-          <span className="text-[10px] tracking-[0.28em] uppercase font-body font-light text-gold">
-            {t.hero.eyebrow}
-          </span>
-          <div className="h-px w-8 bg-gold/50" aria-hidden />
-        </motion.div>
+          <span className="block w-5 h-px bg-gold/60" aria-hidden />
+          {t.hero.eyebrow}
+        </motion.p>
 
-        {/* Headline */}
-        <h1 className="font-display text-[13vw] sm:text-[11vw] md:text-[9vw] lg:text-[7.5vw] xl:text-[6.5vw] font-light text-ivory leading-[0.92] tracking-[-0.03em] mb-10 md:mb-14 text-left md:text-center">
-          {headlineLines.map((line, i) => (
+        {/* Headline — editorial left block */}
+        <h1 className="display text-ivory mb-8 md:mb-10 max-w-4xl" aria-label={t.hero.headline.replace(/\n/g, " ")}>
+          {t.hero.headline.split("\n").map((line, i) => (
             <motion.span
               key={i}
-              {...fadeInUp(0.35 + i * 0.12)}
-              className="block"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{
+                duration: 1.1,
+                delay: 0.65 + i * 0.14,
+                ease: [0.16, 1, 0.3, 1] as const,
+              }}
+              className="block text-[12.5vw] sm:text-[9.5vw] md:text-[8vw] lg:text-[6.8vw] xl:text-[5.8vw] leading-[0.9]"
             >
               {line}
             </motion.span>
           ))}
         </h1>
 
-        {/* Subheadline */}
-        <motion.p
-          {...fadeInUp(0.8)}
-          className="font-body font-light text-ivory/55 text-sm md:text-base leading-relaxed max-w-[500px] md:max-w-[560px] mb-12 md:mb-16 text-left md:text-center"
-        >
-          {t.hero.subheadline}
-        </motion.p>
+        {/* Body + CTAs — bottom row, two columns */}
+        <div className="mt-auto flex flex-col md:flex-row md:items-end md:justify-between gap-8 md:gap-16 pt-6 border-t border-ivory/10">
 
-        {/* CTAs */}
-        <motion.div
-          {...fadeInUp(1.0)}
-          className="flex flex-col sm:flex-row items-start sm:items-center gap-4"
-        >
-          <button
-            onClick={() => handleNavClick("contact")}
-            className="inline-flex items-center px-8 py-4 bg-ivory text-black text-[10px] tracking-[0.2em] uppercase font-body font-medium transition-colors duration-400 hover:bg-ivory/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+          {/* Subheadline */}
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9, delay: 1.1 }}
+            className="text-ivory/45 text-[0.78rem] leading-[1.75] max-w-xs font-body font-light"
           >
-            {t.hero.cta1}
-          </button>
+            {t.hero.subheadline}
+          </motion.p>
 
-          <button
-            onClick={() => handleNavClick("contact")}
-            className="group inline-flex items-center gap-3 px-8 py-4 border border-ivory/30 text-ivory/80 text-[10px] tracking-[0.2em] uppercase font-body font-medium transition-all duration-400 hover:border-ivory/60 hover:text-ivory focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gold"
+          {/* CTAs */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 1.3 }}
+            className="flex items-center gap-6 flex-shrink-0"
           >
-            {t.hero.cta2}
-            <span className="block w-5 h-px bg-current transition-all duration-400 group-hover:w-7" aria-hidden />
-          </button>
-        </motion.div>
+            <button
+              onClick={() => scrollTo("contact")}
+              className="group inline-flex items-center gap-3 overline text-ivory border-b border-ivory/30 pb-px transition-all duration-400 hover:border-ivory/70"
+            >
+              {t.hero.cta1}
+              <span className="block h-px bg-current transition-all duration-500 w-4 group-hover:w-6" aria-hidden />
+            </button>
+            <span className="text-ivory/15 overline">·</span>
+            <button
+              onClick={() => scrollTo("contact")}
+              className="group inline-flex items-center gap-3 overline text-ivory/40 transition-colors duration-400 hover:text-ivory"
+            >
+              {t.hero.cta2}
+            </button>
+          </motion.div>
+
+        </div>
 
         {/* Footnote */}
         <motion.p
-          {...fadeInUp(1.2)}
-          className="mt-10 text-[10px] tracking-[0.16em] uppercase font-body text-ivory/25"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.6, duration: 0.7 }}
+          className="mt-5 overline text-ivory/18"
         >
           {t.hero.footnote}
         </motion.p>
+
       </motion.div>
 
       {/* Scroll cue */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1.8, duration: 0.8 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center"
+        transition={{ delay: 2, duration: 1 }}
         aria-hidden
+        className="absolute bottom-8 right-[1.75rem] md:right-[4rem] flex flex-col items-center gap-2"
       >
         <motion.div
-          animate={{ y: [0, 8, 0] }}
-          transition={{ repeat: Infinity, duration: 2.8, ease: "easeInOut" }}
-          className="w-px h-12 bg-gradient-to-b from-ivory/35 to-transparent"
+          animate={{ y: [0, 7, 0] }}
+          transition={{ repeat: Infinity, duration: 3, ease: "easeInOut" }}
+          className="w-px h-10 bg-gradient-to-b from-ivory/25 to-transparent"
         />
       </motion.div>
+
     </section>
   );
 }

@@ -28,12 +28,7 @@ export function Contact({ t }: ContactProps) {
   const [status, setStatus] = useState<FormStatus>("idle");
   const f = t.contact.form;
 
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm<FormValues>({
+  const { register, handleSubmit, reset, formState: { errors } } = useForm<FormValues>({
     resolver: zodResolver(schema),
   });
 
@@ -53,255 +48,224 @@ export function Contact({ t }: ContactProps) {
     }
   };
 
-  const inputClass = (hasError: boolean) =>
-    [
-      "w-full border-b py-3 text-sm font-body text-black placeholder-charcoal-light/50",
-      "transition-colors duration-300 focus:outline-none",
-      hasError
-        ? "border-b-red-400 focus:border-b-red-500"
-        : "border-b-border focus:border-b-gold",
-    ].join(" ");
-
-  const labelClass = "block text-[10px] tracking-[0.16em] uppercase font-body text-gold mb-1.5";
-
   return (
     <section
       id="contact"
       ref={sectionRef}
-      className="bg-charcoal relative overflow-hidden"
+      className="bg-black"
       aria-labelledby="contact-heading"
     >
-      <div className="max-w-[1400px] mx-auto px-6 md:px-16 lg:px-24 py-24 md:py-36">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 xl:gap-32">
-          {/* Left: Header */}
-          <div className="flex flex-col justify-between">
-            <div>
-              <motion.div
-                initial={{ opacity: 0, x: -12 }}
-                animate={isInView ? { opacity: 1, x: 0 } : {}}
-                transition={{ duration: 0.6 }}
-                className="flex items-center gap-3 mb-6"
-              >
-                <div className="h-px w-6 bg-gold" aria-hidden />
-                <span className="text-[10px] tracking-[0.24em] uppercase font-body text-gold">
-                  {t.contact.eyebrow}
-                </span>
-              </motion.div>
+      <div className="inner gutter py-28 md:py-44">
+        <div className="grid grid-cols-12 gap-x-6 md:gap-x-10">
 
-              <motion.h2
-                id="contact-heading"
-                initial={{ opacity: 0, y: 20 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.8, delay: 0.1, ease: [0.25, 0.46, 0.45, 0.94] as const }}
-                className="font-display font-light text-5xl md:text-6xl lg:text-7xl text-ivory leading-[1.0] mb-8"
-              >
-                {t.contact.headline.split("\n").map((line, i) => (
-                  <span key={i} className="block">
-                    {line}
-                  </span>
-                ))}
-              </motion.h2>
+          {/* Left */}
+          <div className="col-span-12 md:col-span-5 mb-16 md:mb-0 flex flex-col">
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={isInView ? { opacity: 1 } : {}}
+              transition={{ duration: 0.6 }}
+              className="overline text-gold/80 flex items-center gap-3 mb-8"
+            >
+              <span className="w-5 h-px bg-gold/50" aria-hidden />
+              {t.contact.eyebrow}
+            </motion.p>
 
-              <motion.p
-                initial={{ opacity: 0, y: 16 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.7, delay: 0.2 }}
-                className="font-body font-light text-sm text-ivory/50 leading-relaxed max-w-sm"
-              >
-                {t.contact.body}
-              </motion.p>
-            </div>
+            <motion.h2
+              id="contact-heading"
+              initial={{ opacity: 0, y: 18 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.9, delay: 0.1, ease: [0.16, 1, 0.3, 1] as const }}
+              className="display text-ivory text-[10vw] sm:text-[7vw] md:text-[4.8vw] lg:text-[3.8vw] mb-8"
+            >
+              {t.contact.headline.split("\n").map((l, i) => (
+                <span key={i} className="block">{l}</span>
+              ))}
+            </motion.h2>
 
-            {/* Decorative element */}
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={isInView ? { opacity: 1 } : {}}
+              transition={{ duration: 0.7, delay: 0.3 }}
+              className="text-stone-light text-[0.78rem] leading-[1.75] font-body font-light max-w-[280px]"
+            >
+              {t.contact.body}
+            </motion.p>
+
+            {/* Discreet address block */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={isInView ? { opacity: 1 } : {}}
-              transition={{ delay: 0.6, duration: 0.8 }}
-              className="hidden lg:block mt-16"
-              aria-hidden
+              transition={{ delay: 0.55, duration: 0.6 }}
+              className="mt-auto pt-16 hidden md:block"
             >
-              <div className="h-px w-24 bg-gold/30 mb-6" />
-              <p className="text-[10px] tracking-[0.2em] uppercase font-body text-ivory/20">
-                Est. MMXXIV
-              </p>
+              <div className="h-px w-10 bg-gold/25 mb-5" />
+              <p className="overline text-stone tracking-[0.14em]">enquiries@blackford.com</p>
             </motion.div>
           </div>
 
-          {/* Right: Form */}
+          {/* Form */}
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.3, ease: [0.25, 0.46, 0.45, 0.94] as const }}
+            transition={{ duration: 0.9, delay: 0.2, ease: [0.16, 1, 0.3, 1] as const }}
+            className="col-span-12 md:col-span-6 md:col-start-7"
           >
             {status === "success" ? (
               <SuccessState t={t} onReset={() => setStatus("idle")} />
             ) : (
-              <form onSubmit={handleSubmit(onSubmit)} noValidate className="space-y-8">
-                {/* Name */}
-                <div>
-                  <label htmlFor="cf-name" className={labelClass}>
-                    {f.name}
-                  </label>
-                  <input
-                    id="cf-name"
-                    type="text"
-                    autoComplete="name"
-                    placeholder="Your full name"
-                    className={inputClass(!!errors.name)}
-                    {...register("name")}
-                  />
-                  {errors.name && (
-                    <p className="mt-1 text-[11px] text-red-400">{errors.name.message}</p>
-                  )}
-                </div>
-
-                {/* Email + Phone */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-                  <div>
-                    <label htmlFor="cf-email" className={labelClass}>
-                      {f.email}
-                    </label>
+              <form onSubmit={handleSubmit(onSubmit)} noValidate>
+                <div className="space-y-0">
+                  <Field label={f.name} error={errors.name?.message}>
                     <input
-                      id="cf-email"
-                      type="email"
-                      autoComplete="email"
-                      placeholder="email@example.com"
-                      className={inputClass(!!errors.email)}
-                      {...register("email")}
+                      type="text"
+                      autoComplete="name"
+                      placeholder=" "
+                      className={fieldClass(!!errors.name)}
+                      {...register("name")}
                     />
-                    {errors.email && (
-                      <p className="mt-1 text-[11px] text-red-400">{errors.email.message}</p>
-                    )}
-                  </div>
-                  <div>
-                    <label htmlFor="cf-phone" className={labelClass}>
-                      {f.phone}
-                    </label>
-                    <input
-                      id="cf-phone"
-                      type="tel"
-                      autoComplete="tel"
-                      placeholder="+44 20 ..."
-                      className={inputClass(false)}
-                      {...register("phone")}
-                    />
-                  </div>
-                </div>
+                  </Field>
 
-                {/* Category */}
-                <div>
-                  <label htmlFor="cf-category" className={labelClass}>
-                    {f.category}
-                  </label>
-                  <div className="relative">
-                    <select
-                      id="cf-category"
-                      className={[
-                        inputClass(!!errors.category),
-                        "appearance-none cursor-pointer pr-8",
-                      ].join(" ")}
-                      {...register("category")}
-                    >
-                      {f.categoryOptions.map((opt) => (
-                        <option key={opt.value} value={opt.value} disabled={opt.value === ""}>
-                          {opt.label}
-                        </option>
-                      ))}
-                    </select>
-                    <div className="absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none text-gold" aria-hidden>
-                      <svg width="10" height="6" viewBox="0 0 10 6" fill="currentColor">
-                        <path d="M0 0l5 6 5-6z" />
-                      </svg>
+                  <div className="grid grid-cols-2 divide-x divide-border-dark">
+                    <Field label={f.email} error={errors.email?.message} noBottomBorder={false}>
+                      <input
+                        type="email"
+                        autoComplete="email"
+                        placeholder=" "
+                        className={fieldClass(!!errors.email)}
+                        {...register("email")}
+                      />
+                    </Field>
+                    <Field label={f.phone}>
+                      <input
+                        type="tel"
+                        autoComplete="tel"
+                        placeholder=" "
+                        className={fieldClass(false)}
+                        {...register("phone")}
+                      />
+                    </Field>
+                  </div>
+
+                  <Field label={f.category} error={errors.category?.message}>
+                    <div className="relative">
+                      <select
+                        className={[fieldClass(!!errors.category), "appearance-none cursor-pointer pr-8"].join(" ")}
+                        {...register("category")}
+                      >
+                        {f.categoryOptions.map((opt) => (
+                          <option key={opt.value} value={opt.value} disabled={opt.value === ""}>
+                            {opt.label}
+                          </option>
+                        ))}
+                      </select>
+                      <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-gold/60" aria-hidden>
+                        <svg width="8" height="5" viewBox="0 0 8 5" fill="currentColor"><path d="M0 0l4 5 4-5z" /></svg>
+                      </div>
                     </div>
-                  </div>
-                  {errors.category && (
-                    <p className="mt-1 text-[11px] text-red-400">{errors.category.message}</p>
-                  )}
+                  </Field>
+
+                  <Field label={f.message} error={errors.message?.message}>
+                    <textarea
+                      rows={4}
+                      placeholder=" "
+                      className={[fieldClass(!!errors.message), "resize-none pt-5"].join(" ")}
+                      {...register("message")}
+                    />
+                  </Field>
                 </div>
 
-                {/* Message */}
-                <div>
-                  <label htmlFor="cf-message" className={labelClass}>
-                    {f.message}
-                  </label>
-                  <textarea
-                    id="cf-message"
-                    rows={4}
-                    placeholder={f.messagePlaceholder}
-                    className={[
-                      inputClass(!!errors.message),
-                      "resize-none border-b-0 border border-border focus:border-gold/60 p-3",
-                    ].join(" ")}
-                    {...register("message")}
-                  />
-                  {errors.message && (
-                    <p className="mt-1 text-[11px] text-red-400">{errors.message.message}</p>
-                  )}
-                </div>
-
-                {/* Error banner */}
+                {/* Error state */}
                 {status === "error" && (
-                  <div className="border border-red-400/30 p-4">
-                    <p className="text-sm font-body text-red-400">{f.errorBody}</p>
-                  </div>
+                  <p className="mt-4 text-[0.7rem] text-red-400/70 font-body">{f.errorBody}</p>
                 )}
 
                 {/* Submit */}
-                <button
-                  type="submit"
-                  disabled={status === "submitting"}
-                  className={[
-                    "inline-flex items-center gap-3 px-8 py-4",
-                    "text-[10px] tracking-[0.2em] uppercase font-body font-medium",
-                    "border border-ivory/30 text-ivory",
-                    "transition-all duration-400",
-                    "hover:border-ivory hover:bg-ivory/5",
-                    "disabled:opacity-50 disabled:cursor-not-allowed",
-                    "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gold",
-                  ].join(" ")}
-                >
-                  {status === "submitting" ? (
-                    <>
-                      <span className="w-3 h-3 border border-ivory/50 border-t-transparent rounded-full animate-spin" aria-hidden />
-                      {f.submitting}
-                    </>
-                  ) : (
-                    <>
-                      {f.submit}
-                      <span className="block w-5 h-px bg-current" aria-hidden />
-                    </>
-                  )}
-                </button>
+                <div className="border-t border-border-dark pt-6 mt-0">
+                  <button
+                    type="submit"
+                    disabled={status === "submitting"}
+                    className="group flex items-center gap-4 overline text-ivory/60 hover:text-ivory transition-colors duration-400 disabled:opacity-40"
+                  >
+                    {status === "submitting" ? (
+                      <>
+                        <span className="w-3.5 h-3.5 rounded-full border border-ivory/30 border-t-transparent animate-spin" aria-hidden />
+                        {f.submitting}
+                      </>
+                    ) : (
+                      <>
+                        <span className="w-5 h-px bg-current transition-all duration-500 group-hover:w-8" aria-hidden />
+                        {f.submit}
+                      </>
+                    )}
+                  </button>
+                </div>
               </form>
             )}
           </motion.div>
+
         </div>
       </div>
     </section>
   );
 }
 
+/* Field wrapper with top-aligned label */
+function Field({
+  label,
+  error,
+  children,
+  noBottomBorder,
+}: {
+  label: string;
+  error?: string;
+  children: React.ReactNode;
+  noBottomBorder?: boolean;
+}) {
+  return (
+    <div
+      className={[
+        "relative border-t border-border-dark",
+        noBottomBorder === false ? "" : "",
+      ].join(" ")}
+    >
+      <label className="absolute top-3 left-4 overline text-stone pointer-events-none z-10">
+        {label}
+      </label>
+      <div className="pt-8 pb-3 px-4">{children}</div>
+      {error && (
+        <p className="px-4 pb-2 text-[0.68rem] text-red-400/60 font-body">{error}</p>
+      )}
+    </div>
+  );
+}
+
+function fieldClass(hasError: boolean): string {
+  return [
+    "w-full bg-transparent text-ivory text-[0.83rem] font-body font-light",
+    "placeholder-transparent focus:outline-none",
+    hasError ? "opacity-100" : "",
+  ].join(" ");
+}
+
 function SuccessState({ t, onReset }: { t: Translations; onReset: () => void }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 16 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6 }}
-      className="flex flex-col justify-center min-h-[400px]"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      className="border-t border-border-dark pt-12 min-h-[360px] flex flex-col justify-center"
     >
-      <div className="h-px w-12 bg-gold mb-8" aria-hidden />
-      <h3 className="font-display font-light text-4xl text-ivory mb-4">
+      <div className="h-px w-10 bg-gold/40 mb-8" />
+      <h3 className="display text-ivory text-3xl md:text-4xl mb-4">
         {t.contact.form.successTitle}
       </h3>
-      <p className="font-body font-light text-sm text-ivory/50 leading-relaxed mb-10 max-w-sm">
+      <p className="text-stone-light text-[0.78rem] leading-[1.75] font-body font-light max-w-xs mb-10">
         {t.contact.form.successBody}
       </p>
       <button
         onClick={onReset}
-        className="self-start flex items-center gap-3 text-[10px] tracking-[0.16em] uppercase font-body text-gold hover:text-gold-light transition-colors duration-300 focus-visible:outline-none"
+        className="ink overline text-gold/60 hover:text-gold transition-colors duration-300 self-start"
       >
         Submit another enquiry
-        <span className="block w-5 h-px bg-current" aria-hidden />
       </button>
     </motion.div>
   );

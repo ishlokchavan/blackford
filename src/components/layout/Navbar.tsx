@@ -17,50 +17,50 @@ export function Navbar({ locale, onLocaleChange, t }: NavbarProps) {
   const langRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 40);
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    const onScroll = () => setScrolled(window.scrollY > 60);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   useEffect(() => {
-    function handleClickOutside(e: MouseEvent) {
+    const handler = (e: MouseEvent) => {
       if (langRef.current && !langRef.current.contains(e.target as Node)) {
         setLangOpen(false);
       }
-    }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
   }, []);
 
-  const handleNavClick = (id: string) => {
-    const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: "smooth" });
+  const scrollTo = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
     <motion.header
-      initial={{ opacity: 0, y: -8 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 1, delay: 0.1 }}
       className={[
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
+        "fixed inset-x-0 top-0 z-50 transition-all duration-700",
         scrolled
-          ? "bg-ivory/95 backdrop-blur-md border-b border-border"
+          ? "bg-ivory/96 backdrop-blur-sm border-b border-border"
           : "bg-transparent",
       ].join(" ")}
       role="banner"
     >
-      <div className="max-w-[1400px] mx-auto px-6 md:px-10 lg:px-16">
-        <div className="flex items-center justify-between h-16 md:h-20">
-          {/* Logo */}
+      <div className="inner gutter">
+        <div className="flex items-center justify-between h-14 md:h-16">
+
+          {/* Wordmark */}
           <button
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-            className="flex flex-col items-start gap-0.5 focus-visible:outline-none group"
-            aria-label="Blackford — return to top"
+            aria-label="Blackford"
+            className="flex items-baseline gap-3 group"
           >
             <span
               className={[
-                "font-display font-light tracking-[0.3em] text-sm uppercase transition-colors duration-300",
+                "overline tracking-[0.32em] transition-colors duration-500",
                 scrolled ? "text-black" : "text-ivory",
               ].join(" ")}
             >
@@ -68,7 +68,15 @@ export function Navbar({ locale, onLocaleChange, t }: NavbarProps) {
             </span>
             <span
               className={[
-                "text-[9px] tracking-[0.2em] uppercase font-body font-light transition-colors duration-300",
+                "overline tracking-[0.18em] transition-colors duration-500 opacity-50",
+                scrolled ? "text-stone" : "text-ivory",
+              ].join(" ")}
+            >
+              /
+            </span>
+            <span
+              className={[
+                "overline tracking-[0.18em] transition-colors duration-500",
                 scrolled ? "text-gold" : "text-gold-light",
               ].join(" ")}
             >
@@ -76,125 +84,99 @@ export function Navbar({ locale, onLocaleChange, t }: NavbarProps) {
             </span>
           </button>
 
-          {/* Right side */}
-          <div className="flex items-center gap-6 md:gap-8">
-            {/* Nav links — desktop */}
-            <nav className="hidden md:flex items-center gap-7" aria-label="Primary navigation">
-              <NavLink
-                label={t.nav.acquisitions}
-                scrolled={scrolled}
-                onClick={() => handleNavClick("categories")}
-              />
-              <NavLink
-                label={t.nav.about}
-                scrolled={scrolled}
-                onClick={() => handleNavClick("contact")}
-              />
+          {/* Right cluster */}
+          <div className="flex items-center gap-7 md:gap-9">
+
+            {/* Anchors — md+ */}
+            <nav className="hidden md:flex items-center gap-7" aria-label="Site navigation">
+              {[
+                { label: t.nav.acquisitions, id: "categories" },
+                { label: t.nav.about, id: "contact" },
+              ].map(({ label, id }) => (
+                <button
+                  key={id}
+                  onClick={() => scrollTo(id)}
+                  className={[
+                    "ink overline transition-colors duration-400",
+                    scrolled ? "text-stone-light hover:text-black" : "text-ivory/60 hover:text-ivory",
+                  ].join(" ")}
+                >
+                  {label}
+                </button>
+              ))}
             </nav>
 
-            {/* Language selector */}
+            {/* Language */}
             <div ref={langRef} className="relative">
               <button
                 onClick={() => setLangOpen((v) => !v)}
                 aria-expanded={langOpen}
                 aria-haspopup="listbox"
-                aria-label={`Language: ${localeLabels[locale]}`}
                 className={[
-                  "flex items-center gap-1.5 text-[10px] tracking-[0.14em] uppercase font-body font-medium",
-                  "transition-colors duration-300 focus-visible:outline-none",
-                  scrolled ? "text-charcoal-light hover:text-black" : "text-ivory/70 hover:text-ivory",
+                  "overline flex items-center gap-1.5 transition-colors duration-400",
+                  scrolled ? "text-stone-light hover:text-black" : "text-ivory/55 hover:text-ivory",
                 ].join(" ")}
               >
-                <span>{localeLabels[locale]}</span>
-                <motion.svg
+                {localeLabels[locale]}
+                <motion.span
                   animate={{ rotate: langOpen ? 180 : 0 }}
-                  transition={{ duration: 0.25 }}
-                  width="8"
-                  height="5"
-                  viewBox="0 0 8 5"
-                  fill="currentColor"
+                  transition={{ duration: 0.2 }}
+                  className="block mt-px"
                   aria-hidden
                 >
-                  <path d="M0 0l4 5 4-5z" />
-                </motion.svg>
+                  <svg width="7" height="4" viewBox="0 0 7 4" fill="currentColor">
+                    <path d="M0 0l3.5 4L7 0z" />
+                  </svg>
+                </motion.span>
               </button>
 
               <AnimatePresence>
                 {langOpen && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 6 }}
+                  <motion.ul
+                    initial={{ opacity: 0, y: 5 }}
                     animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 6 }}
-                    transition={{ duration: 0.2 }}
-                    className="absolute top-full right-0 mt-2 w-36 bg-ivory border border-border shadow-sm"
+                    exit={{ opacity: 0, y: 5 }}
+                    transition={{ duration: 0.18 }}
                     role="listbox"
-                    aria-label="Select language"
+                    className="absolute right-0 top-full mt-2 w-32 bg-ivory border border-border shadow-sm py-1"
                   >
                     {locales.map((l) => (
-                      <button
-                        key={l}
-                        role="option"
-                        aria-selected={l === locale}
-                        onClick={() => {
-                          onLocaleChange(l);
-                          setLangOpen(false);
-                        }}
-                        className={[
-                          "w-full text-left px-4 py-2.5 text-[11px] tracking-[0.1em] uppercase font-body",
-                          "transition-colors duration-200",
-                          l === locale
-                            ? "text-gold font-medium bg-gold-pale"
-                            : "text-charcoal-light hover:text-black hover:bg-ivory-deep",
-                        ].join(" ")}
-                      >
-                        {localeLabels[l]}
-                      </button>
+                      <li key={l} role="option" aria-selected={l === locale}>
+                        <button
+                          onClick={() => { onLocaleChange(l); setLangOpen(false); }}
+                          className={[
+                            "w-full text-left px-4 py-2 overline transition-colors duration-200",
+                            l === locale
+                              ? "text-gold bg-gold-pale"
+                              : "text-stone hover:text-black hover:bg-ivory-mid",
+                          ].join(" ")}
+                        >
+                          {localeLabels[l]}
+                        </button>
+                      </li>
                     ))}
-                  </motion.div>
+                  </motion.ul>
                 )}
               </AnimatePresence>
             </div>
 
-            {/* CTA */}
+            {/* Register — md+ */}
             <button
-              onClick={() => handleNavClick("contact")}
+              onClick={() => scrollTo("contact")}
               className={[
-                "hidden md:inline-flex items-center px-5 py-2.5",
-                "text-[10px] tracking-[0.14em] uppercase font-body font-medium",
-                "border transition-all duration-300",
+                "hidden md:inline-flex items-center gap-2.5 overline transition-all duration-400",
                 scrolled
-                  ? "border-black text-black hover:bg-black hover:text-ivory"
-                  : "border-ivory/60 text-ivory hover:border-ivory hover:bg-ivory/10",
+                  ? "text-black border-b border-black/30 pb-px hover:border-black"
+                  : "text-ivory/70 border-b border-ivory/20 pb-px hover:text-ivory hover:border-ivory/50",
               ].join(" ")}
             >
               {t.nav.registerInterest}
+              <span className="block w-4 h-px bg-current" aria-hidden />
             </button>
+
           </div>
         </div>
       </div>
     </motion.header>
-  );
-}
-
-function NavLink({
-  label,
-  onClick,
-  scrolled,
-}: {
-  label: string;
-  onClick: () => void;
-  scrolled: boolean;
-}) {
-  return (
-    <button
-      onClick={onClick}
-      className={[
-        "hover-underline text-[11px] tracking-[0.12em] uppercase font-body font-light",
-        "transition-colors duration-300 focus-visible:outline-none",
-        scrolled ? "text-charcoal-light hover:text-black" : "text-ivory/70 hover:text-ivory",
-      ].join(" ")}
-    >
-      {label}
-    </button>
   );
 }

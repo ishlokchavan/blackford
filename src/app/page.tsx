@@ -5,6 +5,7 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { Hero } from "@/components/sections/Hero";
 import { Categories } from "@/components/sections/Categories";
+import { Statement } from "@/components/sections/Statement";
 import { Contact } from "@/components/sections/Contact";
 
 export default function HomePage() {
@@ -16,6 +17,7 @@ export default function HomePage() {
       <main id="main-content" tabIndex={-1}>
         <Hero t={t} />
         <Categories t={t} />
+        <Statement />
         <Contact t={t} />
       </main>
       <Footer t={t} />
