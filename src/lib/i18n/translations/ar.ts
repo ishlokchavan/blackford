@@ -76,6 +76,7 @@ export const ar: Translations = {
       successBody: "سيتواصل معك أحد أعضاء فريقنا خلال يوم عمل واحد. تم إرسال تأكيد إلى بريدك الإلكتروني.",
       errorTitle: "حدث خطأ ما.",
       errorBody: "يرجى المحاولة مجدداً أو التواصل معنا مباشرة.",
+      minimumNote: "Blackford works with transactions from £100,000 and above.",
     },
   },
   footer: {

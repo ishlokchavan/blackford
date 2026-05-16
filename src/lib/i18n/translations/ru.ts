@@ -77,6 +77,7 @@ export const ru: Translations = {
         "Наш сотрудник свяжется с вами в течение одного рабочего дня. Подтверждение отправлено на вашу почту.",
       errorTitle: "Произошла ошибка.",
       errorBody: "Пожалуйста, повторите попытку или свяжитесь с нами напрямую.",
+      minimumNote: "Blackford works with transactions from £100,000 and above.",
     },
   },
   footer: {

@@ -49,6 +49,7 @@ export interface Translations {
       successBody: string;
       errorTitle: string;
       errorBody: string;
+      minimumNote: string;
     };
   };
   footer: {
@@ -149,6 +150,7 @@ export const en: Translations = {
         "A member of our team will be in touch within one business day. A confirmation has been sent to your email.",
       errorTitle: "Something went wrong.",
       errorBody: "Please try again or contact us directly.",
+      minimumNote: "Blackford works with transactions from £100,000 and above.",
     },
   },
   footer: {

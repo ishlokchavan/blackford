@@ -77,6 +77,7 @@ export const zh: Translations = {
         "我们的团队成员将在一个工作日内与您联系。确认邮件已发送至您的邮箱。",
       errorTitle: "出现错误。",
       errorBody: "请重试或直接与我们联系。",
+      minimumNote: "Blackford works with transactions from £100,000 and above.",
     },
   },
   footer: {

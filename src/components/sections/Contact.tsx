@@ -190,7 +190,7 @@ export function Contact({ t }: ContactProps) {
                 )}
 
                 {/* Submit */}
-                <div className={`${DIVIDER} pt-6`}>
+                <div className={`${DIVIDER} pt-6 flex items-end justify-between gap-6 flex-wrap`}>
                   <button
                     type="submit"
                     disabled={status === "submitting"}
@@ -208,6 +208,9 @@ export function Contact({ t }: ContactProps) {
                       </>
                     )}
                   </button>
+                  <p className="text-[0.65rem] font-body text-white/18 italic leading-snug">
+                    {f.minimumNote}
+                  </p>
                 </div>
 
               </form>
