@@ -47,7 +47,7 @@ export function Categories({ t }: CategoriesProps) {
               initial={{ opacity: 0 }}
               animate={isInView ? { opacity: 1 } : {}}
               transition={{ duration: 0.6 }}
-              className="overline text-gold mb-8"
+              className="text-gold mb-8"
             >
               {t.categories.eyebrow}
             </motion.p>
@@ -137,7 +137,7 @@ export function Categories({ t }: CategoriesProps) {
                         key={id}
                         animate={{ opacity: activeId === id ? 1 : 0 }}
                         transition={{ duration: 0.4 }}
-                        className="overline text-black/50 absolute bottom-0 left-0"
+                        className="text-black/50 absolute bottom-0 left-0"
                       >
                         {item.title}
                       </motion.p>
@@ -253,7 +253,7 @@ function CategoryCarousel({
                   aria-hidden
                 />
                 <div className="absolute bottom-5 left-6 right-6 z-10">
-                  <p className="overline text-white/40 mb-1.5">0{i + 1}</p>
+                  <p className="text-white/40 mb-1.5">0{i + 1}</p>
                   <h3 className="display text-white text-[8vw] sm:text-[6vw] leading-none">{item.title}</h3>
                 </div>
               </div>
@@ -265,7 +265,7 @@ function CategoryCarousel({
                 </p>
                 <button
                   onClick={onCta}
-                  className="group overline text-gold flex items-center gap-2"
+                  className="group text-gold flex items-center gap-2"
                 >
                   {item.cta}
                   <span
@@ -337,7 +337,7 @@ function CategoryRow({
       >
         {/* Index */}
         <div className="col-span-1">
-          <span className={["overline transition-colors duration-500", active ? "text-gold/60" : "text-border"].join(" ")}>
+          <span className={["transition-colors duration-500", active ? "text-gold/60" : "text-border"].join(" ")}>
             0{index + 1}
           </span>
         </div>

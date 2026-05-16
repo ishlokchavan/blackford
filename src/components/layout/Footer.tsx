@@ -17,7 +17,7 @@ export function Footer({ t }: FooterProps) {
       {/* Trust strip */}
       <div className="border-b border-white/8">
         <div className="inner gutter py-5 flex items-center justify-center">
-          <p className="overline text-white/25 text-center">
+          <p className="text-white/25 text-center">
             Trusted by private families, family offices, and institutional clients across 23 countries.
           </p>
         </div>
@@ -29,7 +29,7 @@ export function Footer({ t }: FooterProps) {
           {/* Brand */}
           <div className="col-span-12 md:col-span-4">
             <p className="display text-white text-2xl mb-2">Blackford</p>
-            <p className="overline text-gold/50 mb-6">Private Acquisitions</p>
+            <p className="text-gold/50 mb-6">Private Acquisitions</p>
             <p className="text-[0.72rem] font-body text-white/30 leading-relaxed max-w-[200px]">
               {t.footer.tagline}
             </p>
@@ -37,7 +37,7 @@ export function Footer({ t }: FooterProps) {
 
           {/* Navigation */}
           <nav className="col-span-6 md:col-span-2 md:col-start-6" aria-label="Footer navigation">
-            <p className="overline text-gold/40 mb-5">Navigation</p>
+            <p className="text-gold/40 mb-5">Navigation</p>
             <ul className="space-y-3.5">
               {[
                 { label: t.footer.links.about, id: "categories" },
@@ -65,7 +65,7 @@ export function Footer({ t }: FooterProps) {
 
           {/* Social */}
           <div className="col-span-6 md:col-span-2">
-            <p className="overline text-gold/40 mb-5">Connect</p>
+            <p className="text-gold/40 mb-5">Connect</p>
             <ul className="space-y-3.5">
               {[
                 { label: t.footer.social.instagram, href: "https://instagram.com" },

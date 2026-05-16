@@ -23,7 +23,7 @@ const schema = z.object({
 type FormValues = z.infer<typeof schema>;
 
 /* ─── consistent dark-on-black values ─── */
-const LABEL = "overline text-white/40";
+const LABEL = "text-white/40";
 const INPUT = "w-full bg-transparent text-white text-[0.83rem] font-body font-light focus:outline-none placeholder-white/20";
 const DIVIDER = "border-t border-white/10";
 
@@ -65,7 +65,7 @@ export function Contact({ t }: ContactProps) {
               initial={{ opacity: 0 }}
               animate={isInView ? { opacity: 1 } : {}}
               transition={{ duration: 0.6 }}
-              className="overline text-gold-light/70 mb-8"
+              className="text-gold-light/70 mb-8"
             >
               {t.contact.eyebrow}
             </motion.p>
@@ -98,7 +98,7 @@ export function Contact({ t }: ContactProps) {
               className="mt-auto pt-16 hidden md:block"
             >
               <div className="h-px w-10 bg-gold/20 mb-5" />
-              <p className="overline text-white/30">enquiries@blackford.com</p>
+              <p className="text-white/30">enquiries@blackford.com</p>
             </motion.div>
 
           </div>
@@ -186,7 +186,7 @@ export function Contact({ t }: ContactProps) {
 
                 {/* Error banner */}
                 {status === "error" && (
-                  <p className="py-3 overline text-red-400/70">{f.errorBody}</p>
+                  <p className="py-3 text-red-400/70">{f.errorBody}</p>
                 )}
 
                 {/* Submit */}
@@ -194,7 +194,7 @@ export function Contact({ t }: ContactProps) {
                   <button
                     type="submit"
                     disabled={status === "submitting"}
-                    className="group flex items-center gap-4 overline text-white/50 hover:text-white transition-colors duration-400 disabled:opacity-30 focus-visible:outline-none focus-visible:text-white"
+                    className="group flex items-center gap-4 text-white/50 hover:text-white transition-colors duration-400 disabled:opacity-30 focus-visible:outline-none focus-visible:text-white"
                   >
                     {status === "submitting" ? (
                       <>
@@ -258,7 +258,7 @@ function SuccessState({ t, onReset }: { t: Translations; onReset: () => void }) 
       </p>
       <button
         onClick={onReset}
-        className="ink overline text-gold/60 hover:text-gold-light transition-colors duration-300 self-start"
+        className="ink text-gold/60 hover:text-gold-light transition-colors duration-300 self-start"
       >
         Submit another enquiry
       </button>

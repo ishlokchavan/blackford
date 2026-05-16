@@ -60,7 +60,7 @@ export function Featured() {
             initial={{ opacity: 0 }}
             animate={isInView ? { opacity: 1 } : {}}
             transition={{ duration: 0.6 }}
-            className="overline text-gold mb-6"
+            className="text-gold mb-6"
           >
             Current Opportunities
           </motion.p>
@@ -136,8 +136,8 @@ function AcquisitionCard({
 
       {/* ── Text block ── */}
       <div className="pt-6">
-        {/* Category overline */}
-        <p className="overline text-gold mb-3">{item.category}</p>
+        {/* Category */}
+        <p className="text-gold mb-3">{item.category}</p>
 
         {/* Title */}
         <h3 className="display text-black text-[6.5vw] sm:text-[4.5vw] md:text-[2vw] lg:text-[1.6vw] leading-none mb-2">
@@ -145,7 +145,7 @@ function AcquisitionCard({
         </h3>
 
         {/* Subtitle */}
-        <p className="overline text-stone/60 mb-4">{item.subtitle}</p>
+        <p className="text-stone/60 mb-4">{item.subtitle}</p>
 
         {/* Description */}
         <p className="text-[0.74rem] font-body font-light text-stone leading-[1.75] mb-5 max-w-xs">
@@ -163,7 +163,7 @@ function AcquisitionCard({
               e.preventDefault();
               document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
             }}
-            className="overline text-black/60 hover:text-black transition-colors duration-300 flex items-center gap-2 group"
+            className="text-black/60 hover:text-black transition-colors duration-300 flex items-center gap-2 group"
           >
             Enquire Privately
             <span

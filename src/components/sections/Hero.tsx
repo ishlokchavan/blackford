@@ -89,7 +89,7 @@ export function Hero({ t }: HeroProps) {
           initial={{ opacity: 0, x: -10 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.9, delay: 0.5 }}
-          className="overline text-gold-light mb-10 md:mb-14"
+          className="text-gold-light mb-10 md:mb-14"
         >
           {t.hero.eyebrow}
         </motion.p>
@@ -137,7 +137,7 @@ export function Hero({ t }: HeroProps) {
           >
             <button
               onClick={() => scrollTo("contact")}
-              className="group inline-flex items-center gap-3 overline text-white border-b border-white/40 pb-px transition-all duration-400 hover:border-white"
+              className="group inline-flex items-center gap-3 text-white border-b border-white/40 pb-px transition-all duration-400 hover:border-white"
             >
               {t.hero.cta1}
               <span className="block h-px bg-current transition-all duration-500 w-4 group-hover:w-6" aria-hidden />
@@ -145,7 +145,7 @@ export function Hero({ t }: HeroProps) {
             <span className="text-white/20 select-none">·</span>
             <button
               onClick={() => scrollTo("contact")}
-              className="overline text-white/40 transition-colors duration-400 hover:text-white/80"
+              className="text-white/40 transition-colors duration-400 hover:text-white/80"
             >
               {t.hero.cta2}
             </button>
@@ -157,7 +157,7 @@ export function Hero({ t }: HeroProps) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.6, duration: 0.7 }}
-          className="mt-4 overline text-white/22"
+          className="mt-4 text-white/22"
         >
           {t.hero.footnote}
         </motion.p>

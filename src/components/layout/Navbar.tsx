@@ -68,7 +68,7 @@ export function Navbar({ locale, onLocaleChange, t }: NavbarProps) {
             </span>
             <span
               className={[
-                "overline transition-colors duration-500 opacity-50",
+                "transition-colors duration-500 opacity-50",
                 scrolled ? "text-stone" : "text-ivory",
               ].join(" ")}
             >
@@ -76,7 +76,7 @@ export function Navbar({ locale, onLocaleChange, t }: NavbarProps) {
             </span>
             <span
               className={[
-                "overline transition-colors duration-500",
+                "transition-colors duration-500",
                 scrolled ? "text-gold" : "text-gold-light",
               ].join(" ")}
             >
@@ -97,7 +97,7 @@ export function Navbar({ locale, onLocaleChange, t }: NavbarProps) {
                   key={id}
                   onClick={() => scrollTo(id)}
                   className={[
-                    "ink overline transition-colors duration-400",
+                    "ink transition-colors duration-400",
                     scrolled ? "text-stone-light hover:text-black" : "text-ivory/60 hover:text-ivory",
                   ].join(" ")}
                 >
@@ -113,7 +113,7 @@ export function Navbar({ locale, onLocaleChange, t }: NavbarProps) {
                 aria-expanded={langOpen}
                 aria-haspopup="listbox"
                 className={[
-                  "overline flex items-center gap-1.5 transition-colors duration-400",
+                  "flex items-center gap-1.5 transition-colors duration-400",
                   scrolled ? "text-stone-light hover:text-black" : "text-ivory/55 hover:text-ivory",
                 ].join(" ")}
               >
@@ -145,7 +145,7 @@ export function Navbar({ locale, onLocaleChange, t }: NavbarProps) {
                         <button
                           onClick={() => { onLocaleChange(l); setLangOpen(false); }}
                           className={[
-                            "w-full text-left px-4 py-2 overline transition-colors duration-200",
+                            "w-full text-left px-4 py-2 transition-colors duration-200",
                             l === locale
                               ? "text-gold bg-gold-pale"
                               : "text-stone hover:text-black hover:bg-ivory-mid",
@@ -164,7 +164,7 @@ export function Navbar({ locale, onLocaleChange, t }: NavbarProps) {
             <button
               onClick={() => scrollTo("contact")}
               className={[
-                "hidden md:inline-flex items-center gap-2.5 overline transition-all duration-400",
+                "hidden md:inline-flex items-center gap-2.5 transition-all duration-400",
                 scrolled
                   ? "text-black border-b border-black/30 pb-px hover:border-black"
                   : "text-ivory/70 border-b border-ivory/20 pb-px hover:text-ivory hover:border-ivory/50",
