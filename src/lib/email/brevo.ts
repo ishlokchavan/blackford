@@ -1,33 +1,14 @@
-const BREVO_API_URL = "https://api.brevo.com/v3/smtp/email";
+import nodemailer from "nodemailer";
 
-interface EmailPayload {
-  sender: { name: string; email: string };
-  to: { email: string; name?: string }[];
-  replyTo?: { email: string; name?: string };
-  subject: string;
-  htmlContent: string;
-  textContent?: string;
-}
-
-async function sendEmail(payload: EmailPayload): Promise<void> {
-  const apiKey = process.env.BREVO_API_KEY;
-  if (!apiKey) throw new Error("BREVO_API_KEY is not configured");
-
-  const response = await fetch(BREVO_API_URL, {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-      "api-key": apiKey,
-    },
-    body: JSON.stringify(payload),
-  });
-
-  if (!response.ok) {
-    const error = await response.text();
-    throw new Error(`Brevo API error ${response.status}: ${error}`);
-  }
-}
+const transporter = nodemailer.createTransport({
+  host: "smtp-relay.brevo.com",
+  port: 587,
+  secure: false,
+  auth: {
+    user: process.env.BREVO_SMTP_USER,
+    pass: process.env.BREVO_SMTP_KEY,
+  },
+});
 
 export interface ContactFormData {
   name: string;
@@ -41,12 +22,12 @@ export async function sendContactConfirmation(data: ContactFormData) {
   const senderName = process.env.EMAIL_SENDER_NAME ?? "Blackford";
   const senderEmail = process.env.EMAIL_SENDER_ADDRESS ?? "enquiries@blackford.com";
 
-  await sendEmail({
-    sender: { name: senderName, email: senderEmail },
-    to: [{ email: data.email, name: data.name }],
+  await transporter.sendMail({
+    from: `"${senderName}" <${senderEmail}>`,
+    to: `"${data.name}" <${data.email}>`,
     subject: "Your enquiry has been received — Blackford",
-    htmlContent: confirmationEmailHtml(data),
-    textContent: confirmationEmailText(data),
+    html: confirmationEmailHtml(data),
+    text: confirmationEmailText(data),
   });
 }
 
@@ -63,13 +44,13 @@ export async function sendAdminNotification(data: ContactFormData) {
     other: "Other",
   };
 
-  await sendEmail({
-    sender: { name: senderName, email: senderEmail },
-    to: [{ email: adminEmail, name: "Blackford Team" }],
-    replyTo: { email: data.email, name: data.name },
+  await transporter.sendMail({
+    from: `"${senderName}" <${senderEmail}>`,
+    to: `"Blackford Team" <${adminEmail}>`,
+    replyTo: `"${data.name}" <${data.email}>`,
     subject: `New enquiry — ${categoryLabels[data.category] ?? data.category} — ${data.name}`,
-    htmlContent: adminEmailHtml(data, categoryLabels),
-    textContent: adminEmailText(data, categoryLabels),
+    html: adminEmailHtml(data, categoryLabels),
+    text: adminEmailText(data, categoryLabels),
   });
 }
 

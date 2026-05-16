@@ -74,8 +74,8 @@ export interface Translations {
 
 export const en: Translations = {
   nav: {
-    registerInterest: "Register Interest",
-    placeBid: "Place a Bid",
+    registerInterest: "Request a Callback",
+    placeBid: "Make an Enquiry",
     about: "About",
     acquisitions: "Acquisitions",
   },
@@ -84,8 +84,8 @@ export const en: Translations = {
     headline: "For those who\nacquire without\nannouncement.",
     subheadline:
       "Blackford facilitates discreet private transactions across prime real estate, motorcars, timepieces, and curated luxury goods — for a carefully considered clientele.",
-    cta1: "Register Interest",
-    cta2: "Place a Bid",
+    cta1: "Request a Callback",
+    cta2: "Make an Enquiry",
     footnote: "By invitation and application only.",
   },
   categories: {
@@ -142,7 +142,7 @@ export const en: Translations = {
       ],
       message: "Your Enquiry",
       messagePlaceholder: "Please describe your interest or requirement.",
-      submit: "Send Enquiry",
+      submit: "Request a Callback",
       submitting: "Sending…",
       successTitle: "Enquiry received.",
       successBody:
