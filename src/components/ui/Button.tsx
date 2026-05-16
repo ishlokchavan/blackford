@@ -25,9 +25,9 @@ const variantStyles: Record<Variant, string> = {
 };
 
 const sizeStyles: Record<Size, string> = {
-  sm: "px-5 py-2.5 text-[11px] tracking-[0.12em]",
-  md: "px-7 py-3.5 text-[11px] tracking-[0.14em]",
-  lg: "px-9 py-4 text-[11px] tracking-[0.16em]",
+  sm: "px-5 py-2.5 text-[12px]",
+  md: "px-7 py-3.5 text-[13px]",
+  lg: "px-9 py-4 text-[14px]",
 };
 
 const LuxuryButton = forwardRef<HTMLButtonElement, ButtonProps>(
@@ -46,7 +46,7 @@ const LuxuryButton = forwardRef<HTMLButtonElement, ButtonProps>(
         aria-disabled={isDisabled}
         className={[
           "relative inline-flex items-center justify-center gap-2",
-          "font-body font-medium uppercase",
+          "font-body font-medium",
           "transition-colors duration-300 ease-out",
           "select-none cursor-pointer",
           "disabled:opacity-50 disabled:cursor-not-allowed",

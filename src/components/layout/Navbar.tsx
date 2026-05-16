@@ -60,15 +60,15 @@ export function Navbar({ locale, onLocaleChange, t }: NavbarProps) {
           >
             <span
               className={[
-                "overline tracking-[0.32em] transition-colors duration-500",
+                "display text-xl md:text-2xl transition-colors duration-500",
                 scrolled ? "text-black" : "text-ivory",
               ].join(" ")}
             >
-              BLACKFORD
+              Blackford
             </span>
             <span
               className={[
-                "overline tracking-[0.18em] transition-colors duration-500 opacity-50",
+                "overline transition-colors duration-500 opacity-50",
                 scrolled ? "text-stone" : "text-ivory",
               ].join(" ")}
             >
@@ -76,7 +76,7 @@ export function Navbar({ locale, onLocaleChange, t }: NavbarProps) {
             </span>
             <span
               className={[
-                "overline tracking-[0.18em] transition-colors duration-500",
+                "overline transition-colors duration-500",
                 scrolled ? "text-gold" : "text-gold-light",
               ].join(" ")}
             >

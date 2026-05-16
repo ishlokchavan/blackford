@@ -98,7 +98,7 @@ export function Contact({ t }: ContactProps) {
               className="mt-auto pt-16 hidden md:block"
             >
               <div className="h-px w-10 bg-gold/20 mb-5" />
-              <p className="overline text-white/30 tracking-[0.14em]">enquiries@blackford.com</p>
+              <p className="overline text-white/30">enquiries@blackford.com</p>
             </motion.div>
 
           </div>
