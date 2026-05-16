@@ -123,13 +123,13 @@ export function Categories({ t }: CategoriesProps) {
                     />
                     <div
                       className="absolute inset-x-0 bottom-0 h-28"
-                      style={{ background: "linear-gradient(to top, #F5F0E8 0%, transparent 100%)" }}
+                      style={{ background: "linear-gradient(to top, #ECE0C8 0%, transparent 100%)" }}
                       aria-hidden
                     />
                   </motion.div>
                 ))}
 
-                <div className="absolute bottom-6 left-5 z-10">
+                <div className="absolute bottom-6 left-5 right-5 z-10">
                   {Object.entries(categoryImages).map(([id]) => {
                     const item = t.categories.items.find((c) => c.id === id);
                     return item ? (
@@ -137,7 +137,7 @@ export function Categories({ t }: CategoriesProps) {
                         key={id}
                         animate={{ opacity: activeId === id ? 1 : 0 }}
                         transition={{ duration: 0.4 }}
-                        className="text-black/50 absolute bottom-0 left-0"
+                        className="smallcaps italic text-black/55 absolute bottom-0 left-0 whitespace-nowrap"
                       >
                         {item.title}
                       </motion.p>
@@ -328,8 +328,8 @@ function CategoryRow({
         onMouseEnter={onEnter}
         onFocus={onEnter}
         className={[
-          "group w-full text-left py-7 md:py-8",
-          "grid grid-cols-12 gap-x-8 items-center",
+          "group w-full text-left py-8 md:py-10 px-5 md:px-7",
+          "grid grid-cols-12 gap-x-6 items-center",
           "transition-colors duration-500",
           active ? "bg-black" : "bg-transparent hover:bg-black/[0.03]",
         ].join(" ")}
@@ -337,8 +337,13 @@ function CategoryRow({
       >
         {/* Index */}
         <div className="col-span-1">
-          <span className={["smallcaps italic transition-colors duration-500", active ? "text-gold-light" : "text-border"].join(" ")}>
-            № {String(index + 1).padStart(2, "0")}
+          <span
+            className={[
+              "smallcaps italic whitespace-nowrap transition-colors duration-500",
+              active ? "text-gold-light" : "text-stone-light/60",
+            ].join(" ")}
+          >
+            №&nbsp;{String(index + 1).padStart(2, "0")}
           </span>
         </div>
 
@@ -346,7 +351,7 @@ function CategoryRow({
         <div className="col-span-4 flex items-center">
           <h3
             className={[
-              "display leading-none transition-colors duration-500 text-[2vw]",
+              "display leading-none transition-colors duration-500 text-[2.4vw] xl:text-[2vw]",
               active ? "text-white" : "text-black",
             ].join(" ")}
           >
@@ -358,8 +363,8 @@ function CategoryRow({
         <div className="col-span-5">
           <p
             className={[
-              "text-[0.74rem] leading-[1.75] font-body font-light max-w-xs transition-colors duration-500",
-              active ? "text-white/50" : "text-stone-light",
+              "text-[0.95rem] leading-[1.7] transition-colors duration-500",
+              active ? "text-white/65" : "text-stone-light",
             ].join(" ")}
           >
             {item.description}
@@ -367,7 +372,7 @@ function CategoryRow({
         </div>
 
         {/* Arrow */}
-        <div className="col-span-2 flex justify-end items-center">
+        <div className="col-span-2 flex justify-end items-center pr-1">
           <svg
             width="18"
             height="10"
