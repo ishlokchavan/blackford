@@ -19,7 +19,6 @@ const categoryImages: Record<string, { src: string; alt: string }> = {
     alt: "Classic provenance motorcar",
   },
   "luxury-goods": {
-    // src: "/images/bag.jpg",
     src: "/images/birkin.webp",
     alt: "Luxury leather goods",
   },
@@ -33,8 +32,8 @@ export function Categories({ t }: CategoriesProps) {
   const ref = useRef<HTMLElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-8%" });
   const [activeId, setActiveId] = useState<string>("real-estate");
-  const scrollTo = (id: string) =>
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+  const scrollToContact = () =>
+    document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
 
   return (
     <section id="categories" ref={ref} className="bg-ivory" aria-labelledby="cat-heading">
@@ -76,51 +75,21 @@ export function Categories({ t }: CategoriesProps) {
             </p>
           </motion.div>
         </div>
-
-        {/* ── Mobile image panel — shown above rows on small screens ── */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.7, delay: 0.2 }}
-          className="lg:hidden relative w-full mb-10 overflow-hidden"
-          style={{ paddingBottom: "62%" }}
-        >
-          {Object.entries(categoryImages).map(([id, img]) => (
-            <motion.div
-              key={id}
-              animate={{ opacity: activeId === id ? 1 : 0 }}
-              transition={{ duration: 0.5, ease: "easeInOut" }}
-              className="absolute inset-0"
-            >
-              <Image
-                src={img.src}
-                alt={img.alt}
-                fill
-                className="object-cover"
-                sizes="(max-width: 1023px) 100vw, 0px"
-              />
-              {/* Bottom label */}
-              <div className="absolute bottom-4 left-4 z-10">
-                <p className="overline text-white/60">
-                  {t.categories.items.find((c) => c.id === id)?.title}
-                </p>
-              </div>
-              <div
-                className="absolute inset-0"
-                style={{ background: "linear-gradient(to top, rgba(8,8,7,0.45) 0%, transparent 50%)" }}
-                aria-hidden
-              />
-            </motion.div>
-          ))}
-        </motion.div>
       </div>
 
-      {/* ── Content: rows + image panel ── */}
-      <div className="inner gutter pb-0">
-        <div className="grid grid-cols-12 gap-x-6 md:gap-x-10">
+      {/* ── Mobile / tablet: swipe carousel ── */}
+      <CategoryCarousel
+        items={t.categories.items}
+        isInView={isInView}
+        onCta={scrollToContact}
+      />
+
+      {/* ── Desktop: rows + sticky image panel ── */}
+      <div className="hidden lg:block inner gutter pb-0">
+        <div className="grid grid-cols-12 gap-x-10">
 
           {/* Left: rows */}
-          <div className="col-span-12 lg:col-span-7">
+          <div className="col-span-7">
             {t.categories.items.map((item, i) => (
               <CategoryRow
                 key={item.id}
@@ -129,14 +98,14 @@ export function Categories({ t }: CategoriesProps) {
                 isInView={isInView}
                 active={activeId === item.id}
                 onEnter={() => setActiveId(item.id)}
-                onCta={() => scrollTo("contact")}
+                onCta={scrollToContact}
               />
             ))}
             <div className="rule" aria-hidden />
           </div>
 
-          {/* Right: image panel — desktop only, taller + wider ── */}
-          <div className="hidden lg:block lg:col-span-5 lg:col-start-8">
+          {/* Right: sticky image panel */}
+          <div className="col-span-5 col-start-8">
             <div className="sticky top-[12vh] h-[76vh]">
               <div className="relative w-full h-full overflow-hidden">
                 {Object.entries(categoryImages).map(([id, img]) => (
@@ -151,7 +120,7 @@ export function Categories({ t }: CategoriesProps) {
                       alt={img.alt}
                       fill
                       className="object-cover"
-                      sizes="(min-width: 1024px) 42vw, 0px"
+                      sizes="42vw"
                     />
                     <div
                       className="absolute inset-x-0 bottom-0 h-28"
@@ -161,7 +130,6 @@ export function Categories({ t }: CategoriesProps) {
                   </motion.div>
                 ))}
 
-                {/* Category label */}
                 <div className="absolute bottom-6 left-5 z-10">
                   {Object.entries(categoryImages).map(([id]) => {
                     const item = t.categories.items.find((c) => c.id === id);
@@ -184,11 +152,124 @@ export function Categories({ t }: CategoriesProps) {
         </div>
       </div>
 
-      {/* Bottom spacing */}
       <div className="h-16 md:h-24" />
     </section>
   );
 }
+
+/* ─── Mobile / tablet carousel ─────────────────────────────────────── */
+
+function CategoryCarousel({
+  items,
+  isInView,
+  onCta,
+}: {
+  items: Translations["categories"]["items"];
+  isInView: boolean;
+  onCta: () => void;
+}) {
+  const [current, setCurrent] = useState(0);
+  const trackRef = useRef<HTMLDivElement>(null);
+
+  const scrollTo = (index: number) => {
+    const el = trackRef.current;
+    if (!el) return;
+    el.scrollTo({ left: index * el.offsetWidth, behavior: "smooth" });
+    setCurrent(index);
+  };
+
+  const handleScroll = () => {
+    const el = trackRef.current;
+    if (!el) return;
+    const idx = Math.round(el.scrollLeft / el.offsetWidth);
+    if (idx !== current) setCurrent(idx);
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={isInView ? { opacity: 1 } : {}}
+      transition={{ duration: 0.7, delay: 0.2 }}
+      className="lg:hidden"
+    >
+      {/* Scrollable track */}
+      <div
+        ref={trackRef}
+        onScroll={handleScroll}
+        className="flex overflow-x-auto snap-x snap-mandatory"
+        style={{ scrollbarWidth: "none", WebkitOverflowScrolling: "touch" } as React.CSSProperties}
+      >
+        {items.map((item, i) => {
+          const img = categoryImages[item.id];
+          return (
+            <div
+              key={item.id}
+              className="flex-shrink-0 w-full snap-start"
+            >
+              {/* Image */}
+              <div className="relative w-full overflow-hidden" style={{ paddingBottom: "62%" }}>
+                {img && (
+                  <Image
+                    src={img.src}
+                    alt={img.alt}
+                    fill
+                    className="object-cover"
+                    sizes="100vw"
+                  />
+                )}
+                <div
+                  className="absolute inset-0"
+                  style={{ background: "linear-gradient(to top, rgba(8,8,7,0.72) 0%, transparent 55%)" }}
+                  aria-hidden
+                />
+                <div className="absolute bottom-5 left-6 right-6 z-10">
+                  <p className="overline text-white/40 mb-1.5">0{i + 1}</p>
+                  <h3 className="display text-white text-[8vw] sm:text-[6vw] leading-none">{item.title}</h3>
+                </div>
+              </div>
+
+              {/* Card text */}
+              <div className="gutter pt-6 pb-8">
+                <p className="text-[0.78rem] leading-[1.8] font-body font-light text-stone-light mb-6 max-w-sm">
+                  {item.description}
+                </p>
+                <button
+                  onClick={onCta}
+                  className="group overline text-gold flex items-center gap-2"
+                >
+                  {item.cta}
+                  <span
+                    className="block h-px bg-gold transition-all duration-400 w-3 group-hover:w-5"
+                    aria-hidden
+                  />
+                </button>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Dot indicators */}
+      <div className="flex items-center justify-center gap-2.5 pb-2 gutter">
+        {items.map((item, i) => (
+          <button
+            key={item.id}
+            onClick={() => scrollTo(i)}
+            aria-label={`View ${item.title}`}
+            className={[
+              "rounded-full transition-all duration-300",
+              current === i
+                ? "w-5 h-1.5 bg-gold"
+                : "w-1.5 h-1.5 bg-stone/25 hover:bg-stone/50",
+            ].join(" ")}
+          />
+        ))}
+      </div>
+    </motion.div>
+  );
+}
+
+/* ─── Desktop category row ──────────────────────────────────────────── */
 
 function CategoryRow({
   item,
@@ -213,35 +294,29 @@ function CategoryRow({
       className="border-t border-border"
     >
       <button
-        onClick={() => { onEnter(); onCta(); }}
+        onClick={onCta}
         onMouseEnter={onEnter}
         onFocus={onEnter}
         className={[
           "group w-full text-left py-7 md:py-8",
-          "grid grid-cols-12 gap-x-4 md:gap-x-8 items-center",
+          "grid grid-cols-12 gap-x-8 items-center",
           "transition-colors duration-500",
           active ? "bg-black" : "bg-transparent hover:bg-black/[0.03]",
         ].join(" ")}
         aria-label={`${item.cta} — ${item.title}`}
       >
         {/* Index */}
-        <div className="col-span-1 hidden md:block">
-          <span
-            className={[
-              "overline transition-colors duration-500",
-              active ? "text-gold/60" : "text-border",
-            ].join(" ")}
-          >
+        <div className="col-span-1">
+          <span className={["overline transition-colors duration-500", active ? "text-gold/60" : "text-border"].join(" ")}>
             0{index + 1}
           </span>
         </div>
 
         {/* Title */}
-        <div className="col-span-8 md:col-span-4 flex items-center">
+        <div className="col-span-4 flex items-center">
           <h3
             className={[
-              "display leading-none transition-colors duration-500",
-              "text-[7vw] sm:text-[5vw] md:text-[2.4vw] lg:text-[2vw]",
+              "display leading-none transition-colors duration-500 text-[2vw]",
               active ? "text-white" : "text-black",
             ].join(" ")}
           >
@@ -250,7 +325,7 @@ function CategoryRow({
         </div>
 
         {/* Description */}
-        <div className="col-span-12 md:col-span-5 mt-2 md:mt-0">
+        <div className="col-span-5">
           <p
             className={[
               "text-[0.74rem] leading-[1.75] font-body font-light max-w-xs transition-colors duration-500",
@@ -261,27 +336,23 @@ function CategoryRow({
           </p>
         </div>
 
-        {/* CTA arrow */}
-        <div className="hidden md:flex col-span-2 justify-end items-center">
-          <span
+        {/* Arrow */}
+        <div className="col-span-2 flex justify-end items-center">
+          <svg
+            width="18"
+            height="10"
+            viewBox="0 0 18 10"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="0.8"
+            aria-hidden
             className={[
-              "overline flex items-center gap-2 transition-all duration-500",
-              active ? "text-gold-light" : "text-border",
+              "transition-all duration-400",
+              active ? "text-gold-light translate-x-1" : "text-border",
             ].join(" ")}
           >
-            <svg
-              width="18"
-              height="10"
-              viewBox="0 0 18 10"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="0.8"
-              aria-hidden
-              className={["transition-transform duration-400", active ? "translate-x-1" : ""].join(" ")}
-            >
-              <path d="M0 5h16M12 1l4 4-4 4" />
-            </svg>
-          </span>
+            <path d="M0 5h16M12 1l4 4-4 4" />
+          </svg>
         </div>
       </button>
     </motion.div>
