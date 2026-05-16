@@ -15,11 +15,12 @@ const categoryImages: Record<string, { src: string; alt: string }> = {
     alt: "Luxury villa exterior with pool",
   },
   automobiles: {
-    src: "/images/automobile.jpg",
+    src: "/images/automobile1.jpg",
     alt: "Classic provenance motorcar",
   },
   "luxury-goods": {
-    src: "/images/bag.jpg",
+    // src: "/images/bag.jpg",
+    src: "/images/birkin.webp",
     alt: "Luxury leather goods",
   },
   timepieces: {
