@@ -11,7 +11,7 @@ interface CategoriesProps {
 
 const categoryImages: Record<string, { src: string; alt: string }> = {
   "real-estate": {
-    src: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=900&q=80",
+    src: "/images/realestate.jpg",
     alt: "Luxury villa exterior with pool",
   },
   automobiles: {
@@ -19,7 +19,7 @@ const categoryImages: Record<string, { src: string; alt: string }> = {
     alt: "Classic provenance motorcar",
   },
   "luxury-goods": {
-    src: "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=900&q=80",
+    src: "/images/bag.jpg",
     alt: "Luxury leather goods",
   },
   timepieces: {
