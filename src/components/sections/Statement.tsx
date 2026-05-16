@@ -47,8 +47,8 @@ export function Statement() {
                 transition={{ duration: 1.1, delay: 0.1, ease: [0.16, 1, 0.3, 1] as const }}
                 className="display-italic text-white text-[7.5vw] sm:text-[5.5vw] md:text-[3.8vw] lg:text-[3vw] leading-[1.12] mb-14"
               >
-                "Every acquisition carries a history. Our responsibility is to ensure
-                the next chapter is handled with equal care."
+                "The most significant transactions rarely appear on a screen.
+                They happen between people who have earned one another's trust."
               </motion.p>
             </blockquote>
 

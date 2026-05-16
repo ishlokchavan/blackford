@@ -90,35 +90,35 @@ export const en: Translations = {
   },
   categories: {
     eyebrow: "Areas of Acquisition",
-    headline: "A considered range\nof categories.",
-    body: "Each discipline is managed by specialists with deep market knowledge and access to provenance-verified inventory unavailable through conventional channels.",
+    headline: "Four disciplines.\nOne standard.",
+    body: "Each category is managed by specialists who have spent careers in their field — with access to provenance-verified inventory that rarely, if ever, reaches the open market.",
     items: [
       {
         id: "real-estate",
         title: "Real Estate",
         description:
-          "Residences and estates of distinction, transacted privately across prime global markets. From Mayfair to the Côte d'Azur.",
+          "Prime residential and commercial property transacted off-market. London, Monaco, Dubai, Geneva — on terms that reflect genuine market appetite, not aspiration.",
         cta: "Request a Callback",
       },
       {
         id: "automobiles",
         title: "Automobiles",
         description:
-          "Provenance-documented motorcars — from significant modern classics to historically important competition vehicles.",
+          "Motor cars of provenance and character. From historically significant competition vehicles to the most considered modern classics — offered to buyers who understand what they are acquiring.",
         cta: "Request a Callback",
       },
       {
         id: "luxury-goods",
         title: "Luxury Goods",
         description:
-          "Objects of enduring craft and material rarity, from the great ateliers of Paris, Milan, and London.",
+          "Objects from the great ateliers of Paris, Milan, and London. Curated for enduring relevance, not seasonality. Leather goods, couture, and rare cultural artefacts.",
         cta: "Request a Callback",
       },
       {
         id: "timepieces",
         title: "Timepieces",
         description:
-          "Important watches from the great ateliers of Geneva, Le Brassus, and La Chaux-de-Fonds — offered privately to serious collectors.",
+          "Horological pieces that transcend category — from rare references by the great Geneva maisons to future classics now in their first years of appreciation.",
         cta: "Request a Callback",
       },
     ],

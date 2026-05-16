@@ -12,33 +12,33 @@ export function Footer({ t }: FooterProps) {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
 
   return (
-    <footer className="bg-black border-t border-border-dark" role="contentinfo">
-      {/* ── Trust strip ── */}
-      <div className="border-b border-border-dark">
-        <div className="inner gutter py-5 md:py-6 flex items-center justify-center">
-          <p className="overline text-white/30 text-center tracking-[0.18em]">
+    <footer className="bg-black border-t border-white/8" role="contentinfo">
+
+      {/* Trust strip */}
+      <div className="border-b border-white/8">
+        <div className="inner gutter py-5 flex items-center justify-center">
+          <p className="overline text-white/25 text-center tracking-[0.18em]">
             Trusted by private families, family offices, and institutional clients across 23 countries.
           </p>
         </div>
       </div>
 
       <div className="inner gutter py-14 md:py-16">
-
         <div className="grid grid-cols-12 gap-x-6 md:gap-x-10 gap-y-10">
 
-          {/* Brand + tagline */}
+          {/* Brand */}
           <div className="col-span-12 md:col-span-4">
-            <p className="overline text-ivory/80 tracking-[0.28em] mb-2">BLACKFORD</p>
-            <p className="overline text-gold/60 mb-5">Private Acquisitions</p>
-            <p className="text-[0.72rem] font-body text-stone leading-relaxed max-w-[200px]">
+            <p className="overline text-white/70 tracking-[0.28em] mb-2">BLACKFORD</p>
+            <p className="overline text-gold/50 mb-6">Private Acquisitions</p>
+            <p className="text-[0.72rem] font-body text-white/30 leading-relaxed max-w-[200px]">
               {t.footer.tagline}
             </p>
           </div>
 
           {/* Navigation */}
           <nav className="col-span-6 md:col-span-2 md:col-start-6" aria-label="Footer navigation">
-            <p className="overline text-gold/50 mb-4">Navigation</p>
-            <ul className="space-y-3">
+            <p className="overline text-gold/40 mb-5">Navigation</p>
+            <ul className="space-y-3.5">
               {[
                 { label: t.footer.links.about, id: "categories" },
                 { label: t.footer.links.contact, id: "contact" },
@@ -46,7 +46,7 @@ export function Footer({ t }: FooterProps) {
                 <li key={id}>
                   <button
                     onClick={() => scrollTo(id)}
-                    className="ink text-[0.72rem] font-body text-stone hover:text-ivory/70 transition-colors duration-300"
+                    className="ink text-[0.72rem] font-body text-white/35 hover:text-white/65 transition-colors duration-300"
                   >
                     {label}
                   </button>
@@ -55,7 +55,7 @@ export function Footer({ t }: FooterProps) {
               <li>
                 <a
                   href="/careers"
-                  className="ink text-[0.72rem] font-body text-stone hover:text-ivory/70 transition-colors duration-300"
+                  className="ink text-[0.72rem] font-body text-white/35 hover:text-white/65 transition-colors duration-300"
                 >
                   {t.footer.links.careers}
                 </a>
@@ -65,8 +65,8 @@ export function Footer({ t }: FooterProps) {
 
           {/* Social */}
           <div className="col-span-6 md:col-span-2">
-            <p className="overline text-gold/50 mb-4">Connect</p>
-            <ul className="space-y-3">
+            <p className="overline text-gold/40 mb-5">Connect</p>
+            <ul className="space-y-3.5">
               {[
                 { label: t.footer.social.instagram, href: "https://instagram.com" },
                 { label: t.footer.social.linkedin, href: "https://linkedin.com" },
@@ -76,7 +76,7 @@ export function Footer({ t }: FooterProps) {
                     href={href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="ink text-[0.72rem] font-body text-stone hover:text-ivory/70 transition-colors duration-300"
+                    className="ink text-[0.72rem] font-body text-white/35 hover:text-white/65 transition-colors duration-300"
                   >
                     {label}
                   </a>
@@ -88,8 +88,8 @@ export function Footer({ t }: FooterProps) {
         </div>
 
         {/* Bottom bar */}
-        <div className="border-t border-border-dark mt-12 pt-7 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-          <p className="text-[0.68rem] font-body text-stone/50 tracking-wide">
+        <div className="border-t border-white/8 mt-12 pt-7 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+          <p className="text-[0.68rem] font-body text-white/22 tracking-wide">
             {t.footer.copyright.replace("{year}", String(year))}
           </p>
           <nav aria-label="Legal navigation">
@@ -102,7 +102,7 @@ export function Footer({ t }: FooterProps) {
                 <li key={href}>
                   <a
                     href={href}
-                    className="text-[0.68rem] font-body text-stone/40 hover:text-stone/70 transition-colors duration-300 tracking-wide"
+                    className="text-[0.68rem] font-body text-white/18 hover:text-white/40 transition-colors duration-300 tracking-wide"
                   >
                     {label}
                   </a>
@@ -112,10 +112,9 @@ export function Footer({ t }: FooterProps) {
           </nav>
         </div>
 
-        <p className="mt-5 text-[0.62rem] font-body text-stone/25 leading-relaxed max-w-lg">
+        <p className="mt-5 text-[0.62rem] font-body text-white/14 leading-relaxed max-w-lg">
           {t.footer.disclaimer}
         </p>
-
       </div>
     </footer>
   );
