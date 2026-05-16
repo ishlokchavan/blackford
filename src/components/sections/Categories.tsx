@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { motion, useInView } from "framer-motion";
 import type { Translations } from "@/lib/i18n/translations/en";
@@ -169,13 +169,22 @@ function CategoryCarousel({
   onCta: () => void;
 }) {
   const [current, setCurrent] = useState(0);
+  const [userPaused, setUserPaused] = useState(false);
   const trackRef = useRef<HTMLDivElement>(null);
+  const resumeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const pauseAutoplay = () => {
+    setUserPaused(true);
+    if (resumeTimerRef.current) clearTimeout(resumeTimerRef.current);
+    resumeTimerRef.current = setTimeout(() => setUserPaused(false), 7000);
+  };
 
   const scrollTo = (index: number) => {
     const el = trackRef.current;
     if (!el) return;
     el.scrollTo({ left: index * el.offsetWidth, behavior: "smooth" });
     setCurrent(index);
+    pauseAutoplay();
   };
 
   const handleScroll = () => {
@@ -184,6 +193,27 @@ function CategoryCarousel({
     const idx = Math.round(el.scrollLeft / el.offsetWidth);
     if (idx !== current) setCurrent(idx);
   };
+
+  // Auto-advance, paused when section is offscreen or user is interacting
+  useEffect(() => {
+    if (!isInView || userPaused) return;
+    const interval = setInterval(() => {
+      const el = trackRef.current;
+      if (!el) return;
+      setCurrent((prev) => {
+        const next = (prev + 1) % items.length;
+        el.scrollTo({ left: next * el.offsetWidth, behavior: "smooth" });
+        return next;
+      });
+    }, 4500);
+    return () => clearInterval(interval);
+  }, [isInView, userPaused, items.length]);
+
+  useEffect(() => {
+    return () => {
+      if (resumeTimerRef.current) clearTimeout(resumeTimerRef.current);
+    };
+  }, []);
 
   return (
     <motion.div
@@ -196,6 +226,7 @@ function CategoryCarousel({
       <div
         ref={trackRef}
         onScroll={handleScroll}
+        onTouchStart={pauseAutoplay}
         className="flex overflow-x-auto snap-x snap-mandatory"
         style={{ scrollbarWidth: "none", WebkitOverflowScrolling: "touch" } as React.CSSProperties}
       >
