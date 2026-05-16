@@ -1,7 +1,6 @@
 "use client";
 
 import { useRef } from "react";
-import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 import type { Translations } from "@/lib/i18n/translations/en";
 
@@ -13,7 +12,7 @@ export function Hero({ t }: HeroProps) {
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const yContent = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
-  const yImage = useTransform(scrollYProgress, [0, 1], ["0%", "12%"]);
+  const yVideo = useTransform(scrollYProgress, [0, 1], ["0%", "12%"]);
   const fade = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
 
   const scrollTo = (id: string) =>
@@ -25,24 +24,25 @@ export function Hero({ t }: HeroProps) {
       className="relative min-h-[100svh] bg-black overflow-hidden flex flex-col"
       aria-label="Hero"
     >
-      {/* ── Background photograph ── */}
+      {/* ── Background video ── */}
       <motion.div
-        style={{ y: yImage }}
+        style={{ y: yVideo }}
         aria-hidden
         className="absolute inset-0 scale-[1.08]"
       >
-        <Image
-          src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1920&q=85"
-          alt=""
-          fill
-          priority
-          className="object-cover"
-          sizes="100vw"
-        />
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          className="absolute inset-0 w-full h-full object-cover"
+        >
+          <source src="/hero.mp4" type="video/mp4" />
+        </video>
       </motion.div>
 
       {/* ── Overlays ── */}
-      {/* Deep base */}
       <div
         aria-hidden
         className="absolute inset-0"
@@ -51,7 +51,6 @@ export function Hero({ t }: HeroProps) {
             "linear-gradient(to bottom, rgba(6,5,4,0.72) 0%, rgba(6,5,4,0.45) 50%, rgba(6,5,4,0.82) 100%)",
         }}
       />
-      {/* Warm left bloom — keeps text legible */}
       <div
         aria-hidden
         className="absolute inset-0"
@@ -182,3 +181,4 @@ export function Hero({ t }: HeroProps) {
     </section>
   );
 }
+

@@ -15,15 +15,15 @@ const categoryImages: Record<string, { src: string; alt: string }> = {
     alt: "Luxury villa exterior with pool",
   },
   automobiles: {
-    src: "https://images.unsplash.com/photo-1544636331-e26879cd4d9b?auto=format&fit=crop&w=900&q=80",
-    alt: "Provenance motorcar",
+    src: "/images/automobile.jpg",
+    alt: "Classic provenance motorcar",
   },
   "luxury-goods": {
     src: "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=900&q=80",
     alt: "Luxury leather goods",
   },
   timepieces: {
-    src: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?auto=format&fit=crop&w=900&q=80",
+    src: "/images/timepiece.jpg",
     alt: "Fine Swiss timepiece",
   },
 };
