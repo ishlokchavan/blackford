@@ -75,6 +75,43 @@ export function Categories({ t }: CategoriesProps) {
             </p>
           </motion.div>
         </div>
+
+        {/* ── Mobile image panel — shown above rows on small screens ── */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={isInView ? { opacity: 1 } : {}}
+          transition={{ duration: 0.7, delay: 0.2 }}
+          className="lg:hidden relative w-full mb-10 overflow-hidden"
+          style={{ paddingBottom: "62%" }}
+        >
+          {Object.entries(categoryImages).map(([id, img]) => (
+            <motion.div
+              key={id}
+              animate={{ opacity: activeId === id ? 1 : 0 }}
+              transition={{ duration: 0.5, ease: "easeInOut" }}
+              className="absolute inset-0"
+            >
+              <Image
+                src={img.src}
+                alt={img.alt}
+                fill
+                className="object-cover"
+                sizes="(max-width: 1023px) 100vw, 0px"
+              />
+              {/* Bottom label */}
+              <div className="absolute bottom-4 left-4 z-10">
+                <p className="overline text-white/60">
+                  {t.categories.items.find((c) => c.id === id)?.title}
+                </p>
+              </div>
+              <div
+                className="absolute inset-0"
+                style={{ background: "linear-gradient(to top, rgba(8,8,7,0.45) 0%, transparent 50%)" }}
+                aria-hidden
+              />
+            </motion.div>
+          ))}
+        </motion.div>
       </div>
 
       {/* ── Content: rows + image panel ── */}
@@ -97,9 +134,9 @@ export function Categories({ t }: CategoriesProps) {
             <div className="rule" aria-hidden />
           </div>
 
-          {/* Right: image panel — desktop only */}
-          <div className="hidden lg:block lg:col-span-4 lg:col-start-9">
-            <div className="sticky top-[20vh] h-[60vh]">
+          {/* Right: image panel — desktop only, taller + wider ── */}
+          <div className="hidden lg:block lg:col-span-5 lg:col-start-8">
+            <div className="sticky top-[12vh] h-[76vh]">
               <div className="relative w-full h-full overflow-hidden">
                 {Object.entries(categoryImages).map(([id, img]) => (
                   <motion.div
@@ -113,18 +150,17 @@ export function Categories({ t }: CategoriesProps) {
                       alt={img.alt}
                       fill
                       className="object-cover"
-                      sizes="(min-width: 1024px) 35vw, 0px"
+                      sizes="(min-width: 1024px) 42vw, 0px"
                     />
-                    {/* Subtle bottom fade */}
                     <div
-                      className="absolute inset-x-0 bottom-0 h-24"
+                      className="absolute inset-x-0 bottom-0 h-28"
                       style={{ background: "linear-gradient(to top, #F5F0E8 0%, transparent 100%)" }}
                       aria-hidden
                     />
                   </motion.div>
                 ))}
 
-                {/* Category label overlay */}
+                {/* Category label */}
                 <div className="absolute bottom-6 left-5 z-10">
                   {Object.entries(categoryImages).map(([id]) => {
                     const item = t.categories.items.find((c) => c.id === id);
@@ -176,7 +212,7 @@ function CategoryRow({
       className="border-t border-border"
     >
       <button
-        onClick={onCta}
+        onClick={() => { onEnter(); onCta(); }}
         onMouseEnter={onEnter}
         onFocus={onEnter}
         className={[
