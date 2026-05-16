@@ -18,12 +18,16 @@ export interface ContactFormData {
   message: string;
 }
 
-export async function sendContactConfirmation(data: ContactFormData) {
-  const senderName = process.env.EMAIL_SENDER_NAME ?? "Blackford";
-  const senderEmail = process.env.EMAIL_SENDER_ADDRESS ?? "enquiries@blackford.com";
+function resolveFrom(): string {
+  if (process.env.BREVO_FROM_EMAIL) return process.env.BREVO_FROM_EMAIL;
+  const name = process.env.EMAIL_SENDER_NAME ?? "Blackford";
+  const email = process.env.EMAIL_SENDER_ADDRESS ?? "enquiries@blackford.com";
+  return `"${name}" <${email}>`;
+}
 
+export async function sendContactConfirmation(data: ContactFormData) {
   await transporter.sendMail({
-    from: `"${senderName}" <${senderEmail}>`,
+    from: resolveFrom(),
     to: `"${data.name}" <${data.email}>`,
     subject: "Your enquiry has been received — Blackford",
     html: confirmationEmailHtml(data),
@@ -32,9 +36,7 @@ export async function sendContactConfirmation(data: ContactFormData) {
 }
 
 export async function sendAdminNotification(data: ContactFormData) {
-  const senderName = process.env.EMAIL_SENDER_NAME ?? "Blackford";
-  const senderEmail = process.env.EMAIL_SENDER_ADDRESS ?? "enquiries@blackford.com";
-  const adminEmail = process.env.EMAIL_ADMIN_ADDRESS ?? senderEmail;
+  const adminEmail = process.env.EMAIL_ADMIN_ADDRESS ?? process.env.EMAIL_SENDER_ADDRESS ?? "enquiries@blackford.com";
 
   const categoryLabels: Record<string, string> = {
     "real-estate": "Real Estate",
@@ -45,7 +47,7 @@ export async function sendAdminNotification(data: ContactFormData) {
   };
 
   await transporter.sendMail({
-    from: `"${senderName}" <${senderEmail}>`,
+    from: resolveFrom(),
     to: `"Blackford Team" <${adminEmail}>`,
     replyTo: `"${data.name}" <${data.email}>`,
     subject: `New enquiry — ${categoryLabels[data.category] ?? data.category} — ${data.name}`,

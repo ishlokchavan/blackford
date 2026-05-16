@@ -31,7 +31,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ success: true }, { status: 200 });
   } catch (error) {
-    console.error("Contact form error:", error);
+    console.error("Contact form error:", JSON.stringify(error, Object.getOwnPropertyNames(error as object)));
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }
