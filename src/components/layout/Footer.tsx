@@ -13,6 +13,15 @@ export function Footer({ t }: FooterProps) {
 
   return (
     <footer className="bg-black border-t border-border-dark" role="contentinfo">
+      {/* ── Trust strip ── */}
+      <div className="border-b border-border-dark">
+        <div className="inner gutter py-5 md:py-6 flex items-center justify-center">
+          <p className="overline text-white/30 text-center tracking-[0.18em]">
+            Trusted by private families, family offices, and institutional clients across 23 countries.
+          </p>
+        </div>
+      </div>
+
       <div className="inner gutter py-14 md:py-16">
 
         <div className="grid grid-cols-12 gap-x-6 md:gap-x-10 gap-y-10">

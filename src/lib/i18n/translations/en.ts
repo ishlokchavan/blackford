@@ -83,7 +83,7 @@ export const en: Translations = {
     eyebrow: "Private Acquisitions",
     headline: "For those who\nacquire without\nannouncement.",
     subheadline:
-      "Blackford facilitates private transactions across real estate, motorcars, timepieces, and luxury goods — conducted with the discretion your acquisitions deserve.",
+      "Blackford facilitates discreet private transactions across prime real estate, motorcars, timepieces, and curated luxury goods — for a carefully considered clientele.",
     cta1: "Register Interest",
     cta2: "Place a Bid",
     footnote: "By invitation and application only.",

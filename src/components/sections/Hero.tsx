@@ -32,7 +32,7 @@ export function Hero({ t }: HeroProps) {
         className="absolute inset-0 scale-[1.08]"
       >
         <Image
-          src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1920&q=80"
+          src="https://images.unsplash.com/photo-1600210492493-0946911123ea?auto=format&fit=crop&w=1920&q=85"
           alt=""
           fill
           priority
