@@ -22,6 +22,11 @@ const schema = z.object({
 
 type FormValues = z.infer<typeof schema>;
 
+/* ─── consistent dark-on-black values ─── */
+const LABEL = "overline text-white/40";
+const INPUT = "w-full bg-transparent text-white text-[0.83rem] font-body font-light focus:outline-none placeholder-white/20";
+const DIVIDER = "border-t border-white/10";
+
 export function Contact({ t }: ContactProps) {
   const sectionRef = useRef<HTMLElement>(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-8%" });
@@ -49,24 +54,20 @@ export function Contact({ t }: ContactProps) {
   };
 
   return (
-    <section
-      id="contact"
-      ref={sectionRef}
-      className="bg-black"
-      aria-labelledby="contact-heading"
-    >
+    <section id="contact" ref={sectionRef} className="bg-black" aria-labelledby="contact-heading">
       <div className="inner gutter py-28 md:py-44">
         <div className="grid grid-cols-12 gap-x-6 md:gap-x-10">
 
-          {/* Left */}
+          {/* ── Left column ── */}
           <div className="col-span-12 md:col-span-5 mb-16 md:mb-0 flex flex-col">
+
             <motion.p
               initial={{ opacity: 0 }}
               animate={isInView ? { opacity: 1 } : {}}
               transition={{ duration: 0.6 }}
-              className="overline text-gold/80 flex items-center gap-3 mb-8"
+              className="overline text-gold-light/70 flex items-center gap-3 mb-8"
             >
-              <span className="w-5 h-px bg-gold/50" aria-hidden />
+              <span className="w-5 h-px bg-gold/40 block" aria-hidden />
               {t.contact.eyebrow}
             </motion.p>
 
@@ -75,7 +76,7 @@ export function Contact({ t }: ContactProps) {
               initial={{ opacity: 0, y: 18 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.9, delay: 0.1, ease: [0.16, 1, 0.3, 1] as const }}
-              className="display text-ivory text-[10vw] sm:text-[7vw] md:text-[4.8vw] lg:text-[3.8vw] mb-8"
+              className="display text-white text-[10vw] sm:text-[7vw] md:text-[4.8vw] lg:text-[3.8vw] mb-8"
             >
               {t.contact.headline.split("\n").map((l, i) => (
                 <span key={i} className="block">{l}</span>
@@ -86,24 +87,24 @@ export function Contact({ t }: ContactProps) {
               initial={{ opacity: 0 }}
               animate={isInView ? { opacity: 1 } : {}}
               transition={{ duration: 0.7, delay: 0.3 }}
-              className="text-stone-light text-[0.78rem] leading-[1.75] font-body font-light max-w-[280px]"
+              className="text-white/45 text-[0.78rem] leading-[1.8] font-body font-light max-w-[280px]"
             >
               {t.contact.body}
             </motion.p>
 
-            {/* Discreet address block */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={isInView ? { opacity: 1 } : {}}
               transition={{ delay: 0.55, duration: 0.6 }}
               className="mt-auto pt-16 hidden md:block"
             >
-              <div className="h-px w-10 bg-gold/25 mb-5" />
-              <p className="overline text-stone tracking-[0.14em]">enquiries@blackford.com</p>
+              <div className="h-px w-10 bg-gold/20 mb-5" />
+              <p className="overline text-white/30 tracking-[0.14em]">enquiries@blackford.com</p>
             </motion.div>
+
           </div>
 
-          {/* Form */}
+          {/* ── Form ── */}
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -114,81 +115,91 @@ export function Contact({ t }: ContactProps) {
               <SuccessState t={t} onReset={() => setStatus("idle")} />
             ) : (
               <form onSubmit={handleSubmit(onSubmit)} noValidate>
-                <div className="space-y-0">
-                  <Field label={f.name} error={errors.name?.message}>
-                    <input
-                      type="text"
-                      autoComplete="name"
-                      placeholder=" "
-                      className={fieldClass(!!errors.name)}
-                      {...register("name")}
-                    />
-                  </Field>
 
-                  <div className="grid grid-cols-2 divide-x divide-border-dark">
-                    <Field label={f.email} error={errors.email?.message} noBottomBorder={false}>
-                      <input
-                        type="email"
-                        autoComplete="email"
-                        placeholder=" "
-                        className={fieldClass(!!errors.email)}
-                        {...register("email")}
-                      />
-                    </Field>
-                    <Field label={f.phone}>
+                {/* Name */}
+                <FormRow label={f.name} error={errors.name?.message}>
+                  <input
+                    type="text"
+                    autoComplete="name"
+                    placeholder="Your full name"
+                    className={INPUT}
+                    {...register("name")}
+                  />
+                </FormRow>
+
+                {/* Email + Phone */}
+                <div className={`grid grid-cols-2 ${DIVIDER}`}>
+                  <FormRow label={f.email} error={errors.email?.message} noBorder>
+                    <input
+                      type="email"
+                      autoComplete="email"
+                      placeholder="email@example.com"
+                      className={INPUT}
+                      {...register("email")}
+                    />
+                  </FormRow>
+                  <div className="border-l border-white/10">
+                    <FormRow label={f.phone} noBorder>
                       <input
                         type="tel"
                         autoComplete="tel"
-                        placeholder=" "
-                        className={fieldClass(false)}
+                        placeholder="+44 ..."
+                        className={INPUT}
                         {...register("phone")}
                       />
-                    </Field>
+                    </FormRow>
                   </div>
-
-                  <Field label={f.category} error={errors.category?.message}>
-                    <div className="relative">
-                      <select
-                        className={[fieldClass(!!errors.category), "appearance-none cursor-pointer pr-8"].join(" ")}
-                        {...register("category")}
-                      >
-                        {f.categoryOptions.map((opt) => (
-                          <option key={opt.value} value={opt.value} disabled={opt.value === ""}>
-                            {opt.label}
-                          </option>
-                        ))}
-                      </select>
-                      <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-gold/60" aria-hidden>
-                        <svg width="8" height="5" viewBox="0 0 8 5" fill="currentColor"><path d="M0 0l4 5 4-5z" /></svg>
-                      </div>
-                    </div>
-                  </Field>
-
-                  <Field label={f.message} error={errors.message?.message}>
-                    <textarea
-                      rows={4}
-                      placeholder=" "
-                      className={[fieldClass(!!errors.message), "resize-none pt-5"].join(" ")}
-                      {...register("message")}
-                    />
-                  </Field>
                 </div>
 
-                {/* Error state */}
+                {/* Category */}
+                <FormRow label={f.category} error={errors.category?.message}>
+                  <div className="relative">
+                    <select
+                      className={[INPUT, "appearance-none cursor-pointer pr-6"].join(" ")}
+                      {...register("category")}
+                    >
+                      {f.categoryOptions.map((opt) => (
+                        <option
+                          key={opt.value}
+                          value={opt.value}
+                          disabled={opt.value === ""}
+                          className="bg-black text-white"
+                        >
+                          {opt.label}
+                        </option>
+                      ))}
+                    </select>
+                    <div className="absolute right-1 top-1/2 -translate-y-1/2 pointer-events-none text-white/30" aria-hidden>
+                      <svg width="8" height="5" viewBox="0 0 8 5" fill="currentColor"><path d="M0 0l4 5 4-5z" /></svg>
+                    </div>
+                  </div>
+                </FormRow>
+
+                {/* Message */}
+                <FormRow label={f.message} error={errors.message?.message}>
+                  <textarea
+                    rows={4}
+                    placeholder="Please describe your interest or requirement."
+                    className={[INPUT, "resize-none"].join(" ")}
+                    {...register("message")}
+                  />
+                </FormRow>
+
+                {/* Error banner */}
                 {status === "error" && (
-                  <p className="mt-4 text-[0.7rem] text-red-400/70 font-body">{f.errorBody}</p>
+                  <p className="py-3 overline text-red-400/70">{f.errorBody}</p>
                 )}
 
                 {/* Submit */}
-                <div className="border-t border-border-dark pt-6 mt-0">
+                <div className={`${DIVIDER} pt-6`}>
                   <button
                     type="submit"
                     disabled={status === "submitting"}
-                    className="group flex items-center gap-4 overline text-ivory/60 hover:text-ivory transition-colors duration-400 disabled:opacity-40"
+                    className="group flex items-center gap-4 overline text-white/50 hover:text-white transition-colors duration-400 disabled:opacity-30 focus-visible:outline-none focus-visible:text-white"
                   >
                     {status === "submitting" ? (
                       <>
-                        <span className="w-3.5 h-3.5 rounded-full border border-ivory/30 border-t-transparent animate-spin" aria-hidden />
+                        <span className="w-3.5 h-3.5 rounded-full border border-white/30 border-t-transparent animate-spin" aria-hidden />
                         {f.submitting}
                       </>
                     ) : (
@@ -199,6 +210,7 @@ export function Contact({ t }: ContactProps) {
                     )}
                   </button>
                 </div>
+
               </form>
             )}
           </motion.div>
@@ -209,42 +221,26 @@ export function Contact({ t }: ContactProps) {
   );
 }
 
-/* Field wrapper with top-aligned label */
-function Field({
+function FormRow({
   label,
   error,
   children,
-  noBottomBorder,
+  noBorder,
 }: {
   label: string;
   error?: string;
   children: React.ReactNode;
-  noBottomBorder?: boolean;
+  noBorder?: boolean;
 }) {
   return (
-    <div
-      className={[
-        "relative border-t border-border-dark",
-        noBottomBorder === false ? "" : "",
-      ].join(" ")}
-    >
-      <label className="absolute top-3 left-4 overline text-stone pointer-events-none z-10">
-        {label}
-      </label>
-      <div className="pt-8 pb-3 px-4">{children}</div>
-      {error && (
-        <p className="px-4 pb-2 text-[0.68rem] text-red-400/60 font-body">{error}</p>
-      )}
+    <div className={noBorder ? "" : DIVIDER}>
+      <div className="px-0 pt-3 pb-3">
+        <p className={`${LABEL} mb-2`}>{label}</p>
+        {children}
+        {error && <p className="mt-1.5 text-[0.67rem] text-red-400/60 font-body">{error}</p>}
+      </div>
     </div>
   );
-}
-
-function fieldClass(hasError: boolean): string {
-  return [
-    "w-full bg-transparent text-ivory text-[0.83rem] font-body font-light",
-    "placeholder-transparent focus:outline-none",
-    hasError ? "opacity-100" : "",
-  ].join(" ");
 }
 
 function SuccessState({ t, onReset }: { t: Translations; onReset: () => void }) {
@@ -252,18 +248,18 @@ function SuccessState({ t, onReset }: { t: Translations; onReset: () => void }) 
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="border-t border-border-dark pt-12 min-h-[360px] flex flex-col justify-center"
+      className={`${DIVIDER} pt-12 min-h-[360px] flex flex-col justify-center`}
     >
-      <div className="h-px w-10 bg-gold/40 mb-8" />
-      <h3 className="display text-ivory text-3xl md:text-4xl mb-4">
+      <div className="h-px w-10 bg-gold/30 mb-8" />
+      <h3 className="display text-white text-3xl md:text-4xl mb-4">
         {t.contact.form.successTitle}
       </h3>
-      <p className="text-stone-light text-[0.78rem] leading-[1.75] font-body font-light max-w-xs mb-10">
+      <p className="text-white/40 text-[0.78rem] leading-[1.8] font-body font-light max-w-xs mb-10">
         {t.contact.form.successBody}
       </p>
       <button
         onClick={onReset}
-        className="ink overline text-gold/60 hover:text-gold transition-colors duration-300 self-start"
+        className="ink overline text-gold/60 hover:text-gold-light transition-colors duration-300 self-start"
       >
         Submit another enquiry
       </button>

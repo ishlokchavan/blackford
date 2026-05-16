@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 import type { Translations } from "@/lib/i18n/translations/en";
 
@@ -11,8 +12,9 @@ interface HeroProps {
 export function Hero({ t }: HeroProps) {
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  const yContent = useTransform(scrollYProgress, [0, 1], ["0%", "18%"]);
-  const fade = useTransform(scrollYProgress, [0, 0.65], [1, 0]);
+  const yContent = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
+  const yImage = useTransform(scrollYProgress, [0, 1], ["0%", "12%"]);
+  const fade = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
 
   const scrollTo = (id: string) =>
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
@@ -23,25 +25,49 @@ export function Hero({ t }: HeroProps) {
       className="relative min-h-[100svh] bg-black overflow-hidden flex flex-col"
       aria-label="Hero"
     >
+      {/* ── Background photograph ── */}
+      <motion.div
+        style={{ y: yImage }}
+        aria-hidden
+        className="absolute inset-0 scale-[1.08]"
+      >
+        <Image
+          src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1920&q=80"
+          alt=""
+          fill
+          priority
+          className="object-cover"
+          sizes="100vw"
+        />
+      </motion.div>
 
-      {/* ── Atmospheric layer ── */}
+      {/* ── Overlays ── */}
+      {/* Deep base */}
       <div
         aria-hidden
-        className="absolute inset-0 pointer-events-none"
+        className="absolute inset-0"
         style={{
           background:
-            "radial-gradient(ellipse 90% 70% at 20% 60%, rgba(44,32,14,0.55) 0%, transparent 65%), " +
-            "radial-gradient(ellipse 60% 80% at 80% 20%, rgba(30,24,14,0.3) 0%, transparent 70%)",
+            "linear-gradient(to bottom, rgba(6,5,4,0.72) 0%, rgba(6,5,4,0.45) 50%, rgba(6,5,4,0.82) 100%)",
+        }}
+      />
+      {/* Warm left bloom — keeps text legible */}
+      <div
+        aria-hidden
+        className="absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(ellipse 75% 80% at 0% 55%, rgba(10,8,4,0.65) 0%, transparent 60%)",
         }}
       />
 
-      {/* Fine film grain */}
-      <svg aria-hidden className="absolute inset-0 w-full h-full opacity-[0.04] pointer-events-none">
-        <filter id="grain">
-          <feTurbulence type="fractalNoise" baseFrequency="0.72" numOctaves="4" stitchTiles="stitch" />
+      {/* Film grain */}
+      <svg aria-hidden className="absolute inset-0 w-full h-full opacity-[0.045] pointer-events-none">
+        <filter id="g">
+          <feTurbulence type="fractalNoise" baseFrequency="0.68" numOctaves="4" stitchTiles="stitch" />
           <feColorMatrix type="saturate" values="0" />
         </filter>
-        <rect width="100%" height="100%" filter="url(#grain)" />
+        <rect width="100%" height="100%" filter="url(#g)" />
       </svg>
 
       {/* Left editorial rule */}
@@ -49,55 +75,57 @@ export function Hero({ t }: HeroProps) {
         aria-hidden
         initial={{ scaleY: 0 }}
         animate={{ scaleY: 1 }}
-        transition={{ duration: 1.6, delay: 0.4, ease: [0.16, 1, 0.3, 1] as const }}
+        transition={{ duration: 1.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] as const }}
         style={{ transformOrigin: "top" }}
-        className="absolute left-[1.75rem] md:left-[4rem] lg:left-[6rem] top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-gold/20 to-transparent"
+        className="absolute left-[1.75rem] md:left-[4rem] lg:left-[6rem] top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-gold/30 to-transparent"
       />
 
       {/* ── Content ── */}
       <motion.div
         style={{ y: yContent, opacity: fade }}
-        className="relative z-10 flex flex-col flex-1 gutter inner pt-[30vh] md:pt-[26vh] pb-16 md:pb-20"
+        className="relative z-10 flex flex-col flex-1 gutter inner pt-[28vh] md:pt-[24vh] pb-14 md:pb-20"
       >
         {/* Eyebrow */}
         <motion.p
           initial={{ opacity: 0, x: -10 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8, delay: 0.5 }}
-          className="overline text-gold mb-10 md:mb-14 flex items-center gap-3"
+          transition={{ duration: 0.9, delay: 0.5 }}
+          className="overline text-gold-light flex items-center gap-3 mb-10 md:mb-14"
         >
-          <span className="block w-5 h-px bg-gold/60" aria-hidden />
+          <span className="block w-5 h-px bg-gold-light/50" aria-hidden />
           {t.hero.eyebrow}
         </motion.p>
 
-        {/* Headline — editorial left block */}
-        <h1 className="display text-ivory mb-8 md:mb-10 max-w-4xl" aria-label={t.hero.headline.replace(/\n/g, " ")}>
+        {/* Headline */}
+        <h1
+          className="display text-white mb-8 md:mb-10"
+          aria-label={t.hero.headline.replace(/\n/g, " ")}
+        >
           {t.hero.headline.split("\n").map((line, i) => (
             <motion.span
               key={i}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 32 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{
                 duration: 1.1,
                 delay: 0.65 + i * 0.14,
                 ease: [0.16, 1, 0.3, 1] as const,
               }}
-              className="block text-[12.5vw] sm:text-[9.5vw] md:text-[8vw] lg:text-[6.8vw] xl:text-[5.8vw] leading-[0.9]"
+              className="block text-[11.5vw] sm:text-[9vw] md:text-[7.5vw] lg:text-[6.2vw] xl:text-[5.4vw] leading-[0.92]"
             >
               {line}
             </motion.span>
           ))}
         </h1>
 
-        {/* Body + CTAs — bottom row, two columns */}
-        <div className="mt-auto flex flex-col md:flex-row md:items-end md:justify-between gap-8 md:gap-16 pt-6 border-t border-ivory/10">
-
+        {/* Bottom row */}
+        <div className="mt-auto flex flex-col md:flex-row md:items-end md:justify-between gap-8 md:gap-16 pt-6 border-t border-white/10">
           {/* Subheadline */}
           <motion.p
-            initial={{ opacity: 0, y: 16 }}
+            initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 1.1 }}
-            className="text-ivory/45 text-[0.78rem] leading-[1.75] max-w-xs font-body font-light"
+            className="text-white/55 text-[0.78rem] leading-[1.8] max-w-xs font-body font-light"
           >
             {t.hero.subheadline}
           </motion.p>
@@ -111,20 +139,19 @@ export function Hero({ t }: HeroProps) {
           >
             <button
               onClick={() => scrollTo("contact")}
-              className="group inline-flex items-center gap-3 overline text-ivory border-b border-ivory/30 pb-px transition-all duration-400 hover:border-ivory/70"
+              className="group inline-flex items-center gap-3 overline text-white border-b border-white/40 pb-px transition-all duration-400 hover:border-white"
             >
               {t.hero.cta1}
               <span className="block h-px bg-current transition-all duration-500 w-4 group-hover:w-6" aria-hidden />
             </button>
-            <span className="text-ivory/15 overline">·</span>
+            <span className="text-white/20 select-none">·</span>
             <button
               onClick={() => scrollTo("contact")}
-              className="group inline-flex items-center gap-3 overline text-ivory/40 transition-colors duration-400 hover:text-ivory"
+              className="overline text-white/40 transition-colors duration-400 hover:text-white/80"
             >
               {t.hero.cta2}
             </button>
           </motion.div>
-
         </div>
 
         {/* Footnote */}
@@ -132,28 +159,26 @@ export function Hero({ t }: HeroProps) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.6, duration: 0.7 }}
-          className="mt-5 overline text-ivory/18"
+          className="mt-4 overline text-white/22"
         >
           {t.hero.footnote}
         </motion.p>
-
       </motion.div>
 
       {/* Scroll cue */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 2, duration: 1 }}
+        transition={{ delay: 2.2, duration: 1 }}
         aria-hidden
-        className="absolute bottom-8 right-[1.75rem] md:right-[4rem] flex flex-col items-center gap-2"
+        className="absolute bottom-8 right-[1.75rem] md:right-[4rem] flex flex-col items-center"
       >
         <motion.div
-          animate={{ y: [0, 7, 0] }}
-          transition={{ repeat: Infinity, duration: 3, ease: "easeInOut" }}
-          className="w-px h-10 bg-gradient-to-b from-ivory/25 to-transparent"
+          animate={{ y: [0, 8, 0] }}
+          transition={{ repeat: Infinity, duration: 3.2, ease: "easeInOut" }}
+          className="w-px h-10 bg-gradient-to-b from-white/30 to-transparent"
         />
       </motion.div>
-
     </section>
   );
 }
