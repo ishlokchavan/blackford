@@ -65,9 +65,8 @@ export function Contact({ t }: ContactProps) {
               initial={{ opacity: 0 }}
               animate={isInView ? { opacity: 1 } : {}}
               transition={{ duration: 0.6 }}
-              className="overline text-gold-light/70 flex items-center gap-3 mb-8"
+              className="overline text-gold-light/70 mb-8"
             >
-              <span className="w-5 h-px bg-gold/40 block" aria-hidden />
               {t.contact.eyebrow}
             </motion.p>
 

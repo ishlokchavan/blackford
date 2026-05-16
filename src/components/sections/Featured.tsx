@@ -60,9 +60,8 @@ export function Featured() {
             initial={{ opacity: 0 }}
             animate={isInView ? { opacity: 1 } : {}}
             transition={{ duration: 0.6 }}
-            className="overline text-gold flex items-center gap-3 mb-6"
+            className="overline text-gold mb-6"
           >
-            <span className="block w-5 h-px bg-gold/60" aria-hidden />
             Current Opportunities
           </motion.p>
           <motion.h2

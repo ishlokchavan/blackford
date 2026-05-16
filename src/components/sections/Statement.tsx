@@ -38,9 +38,8 @@ export function Statement() {
               initial={{ opacity: 0 }}
               animate={isInView ? { opacity: 1 } : {}}
               transition={{ duration: 0.5 }}
-              className="overline text-gold-light/80 flex items-center gap-3 mb-8 md:mb-10"
+              className="overline text-gold-light/80 mb-8 md:mb-10"
             >
-              <span className="w-5 h-px bg-gold/50 block" aria-hidden />
               Established 2024
             </motion.p>
 

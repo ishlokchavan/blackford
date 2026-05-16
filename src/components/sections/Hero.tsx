@@ -89,9 +89,8 @@ export function Hero({ t }: HeroProps) {
           initial={{ opacity: 0, x: -10 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.9, delay: 0.5 }}
-          className="overline text-gold-light flex items-center gap-3 mb-10 md:mb-14"
+          className="overline text-gold-light mb-10 md:mb-14"
         >
-          <span className="block w-5 h-px bg-gold-light/50" aria-hidden />
           {t.hero.eyebrow}
         </motion.p>
 

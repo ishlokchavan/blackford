@@ -47,9 +47,8 @@ export function Categories({ t }: CategoriesProps) {
               initial={{ opacity: 0 }}
               animate={isInView ? { opacity: 1 } : {}}
               transition={{ duration: 0.6 }}
-              className="overline text-gold flex items-center gap-3 mb-8"
+              className="overline text-gold mb-8"
             >
-              <span className="block w-5 h-px bg-gold/60" aria-hidden />
               {t.categories.eyebrow}
             </motion.p>
             <motion.h2
