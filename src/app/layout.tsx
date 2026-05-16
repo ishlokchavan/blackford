@@ -1,11 +1,11 @@
 import type { Metadata, Viewport } from "next";
-import { Cormorant, Inter } from "next/font/google";
+import { Playfair_Display, Inter } from "next/font/google";
 import "./globals.css";
 
-const cormorant = Cormorant({
-  variable: "--font-cormorant",
-  subsets: ["latin", "latin-ext", "cyrillic"],
-  weight: ["300", "400", "500", "600"],
+const playfair = Playfair_Display({
+  variable: "--font-playfair",
+  subsets: ["latin", "latin-ext"],
+  weight: ["400", "500", "600", "700"],
   style: ["normal", "italic"],
   display: "swap",
 });
@@ -110,7 +110,7 @@ export default function RootLayout({
     <html
       lang="en"
       dir="ltr"
-      className={`${cormorant.variable} ${inter.variable} h-full`}
+      className={`${playfair.variable} ${inter.variable} h-full`}
     >
       <head>
         <script
